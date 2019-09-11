@@ -85,6 +85,7 @@ async function signin({ email, password }) {
 async function signup(args) {
     args.email = args.email.toLowerCase();  // lowercase all emails going into the db
     const password = await bcrypt.hash(args.password, 10);
+    // TODO: probably need to add a password compare here if possible, or a better spot.
 
     return prisma.createUser({
         ...args,
