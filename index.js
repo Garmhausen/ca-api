@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const { prisma } = require('./prisma');
 const routes = require('./routes');
@@ -10,6 +11,7 @@ const routes = require('./routes');
 const app = express();
 
 // ------ BEGIN MIDDLEWARE ------
+app.use(cors());
 var expressWs = require('express-ws')(app); // load before routers
 app.use(cookieParser());
 
