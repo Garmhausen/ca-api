@@ -34,7 +34,6 @@ router.use(express.json()); // required for parsing json body in request
 // PATCH /user/:id
 router.patch('/:id', async function(req, res) {
     console.log('POST /user');
-    console.log('body:', req.body);
     const updatingSelf = req.userId == req.params.id;
     const updates = { ...req.body };
     let response;
@@ -85,7 +84,6 @@ router.delete('/:id', async function(req, res) {
 // POST /user/:id/permissions
 router.post('/:id/permissions', async function(req, res) {
     console.log(`POST /user/${req.params.id}/permissions`);
-    console.log('body:', req.body);
     let response;
 
     try {

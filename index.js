@@ -17,7 +17,7 @@ const corsOptions = {
     credentials: true
 }
 app.use(cors(corsOptions));
-var expressWs = require('express-ws')(app); // load before routers
+
 app.use(cookieParser());
 
 // add userId to requests
@@ -54,15 +54,6 @@ app.use(async (req, res, next) => {
 
 // ------ END MIDDLEWARE ------
 app.use(routes);
-
-// websocket service
-app.ws('/ws', function(ws, req) {
-    ws.on('message', function(msg) {
-        expressWs.getWss().clients.forEach((client) => {
-            client.send(msg + ' was received...');
-        });
-    });
-});
 
 app.listen(process.env.PORT || 3000, function() {
     console.log(`Express server listening on port ${this.address().port} in ${app.settings.env} mode`);
