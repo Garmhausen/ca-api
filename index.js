@@ -11,16 +11,21 @@ const routes = require('./routes');
 const app = express();
 
 // ------ BEGIN MIDDLEWARE ------
-app.use(cors());
+const corsOptions = {
+    origin: process.env.FRONTEND_URI,
+    optionsSuccessStatus: 200,
+    credentials: true
+}
+app.use(cors(corsOptions));
 var expressWs = require('express-ws')(app); // load before routers
 app.use(cookieParser());
 
 // add userId to requests
 app.use((req, res, next) => {
-    const { token } = req.cookies;
+    const { farrier_app_token } = req.cookies;
 
-    if (token) {
-        const { userId } = jwt.verify(token, process.env.TOKEN_SECRET);
+    if (farrier_app_token) {
+        const { userId } = jwt.verify(farrier_app_token, process.env.TOKEN_SECRET);
         req.userId = userId;
     }
 
