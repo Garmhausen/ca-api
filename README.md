@@ -1,5 +1,7 @@
 # Client Analysis - API
 
+[documentation](./api-documentation.md)
+
 ### install prisma
 - brew tap prisma/prisma
 - brew install prisma

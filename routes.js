@@ -26,6 +26,11 @@ router.get('/heartbeat', function(req, res) {
 // GET /me
 router.get('/me', async function(req, res) {
     console.log('GET /me');
+
+    if (!req.userId) {
+        return res.status(400).json("Not logged in");
+    }
+
     let response;
 
     try {
