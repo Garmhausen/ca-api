@@ -88,7 +88,7 @@ router.post('/signout', function(req, res) {
     console.log('POST /account/signout');
     console.log('body', req.body);
 
-    res.clearCookie('token');
+    res.clearCookie('farrier_app_token');
     res.json({
         message: 'Goodbye!'
     });

@@ -22,10 +22,10 @@ app.use(cookieParser());
 
 // add userId to requests
 app.use((req, res, next) => {
-    const { token } = req.cookies;
+    const { farrier_app_token } = req.cookies;
 
-    if (token) {
-        const { userId } = jwt.verify(token, process.env.TOKEN_SECRET);
+    if (farrier_app_token) {
+        const { userId } = jwt.verify(farrier_app_token, process.env.TOKEN_SECRET);
         req.userId = userId;
     }
 

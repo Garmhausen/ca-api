@@ -21,7 +21,7 @@ exports.hasPermission = (user, permissionsNeeded) => {
 exports.signInUser = (userId, res) => {
     const token = jwt.sign({ userId }, process.env.TOKEN_SECRET);  // TODO: fix
 
-    res.cookie('token', token, {
+    res.cookie('farrier_app_token', token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year
     });
