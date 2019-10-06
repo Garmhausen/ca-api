@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const query = require('./resolvers/Query');
+const { query } = require('./resolvers');
 
 router.use('/account', require('./routes/account'));
 router.use('/user',     require('./routes/user'));
