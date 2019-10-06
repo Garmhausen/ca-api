@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { handleError, hasPermission, slimUser, verifyLoggedIn } = require('../utils');
-const query = require('../resolvers/Query');
+const { query } = require('../resolvers');
 
 // all routes in this file begin with /users
 

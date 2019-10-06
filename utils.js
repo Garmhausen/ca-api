@@ -18,14 +18,14 @@ exports.hasPermission = (user, permissionsNeeded) => {
     }
 };
 
-exports.signInUser = (userId, res) => {
-    const token = jwt.sign({ userId }, process.env.TOKEN_SECRET);  // TODO: fix
-
-    res.cookie('farrier_app_token', token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year
-    });
-};
+exports.createToken = (userId) => {
+    const token = {
+        userId,
+        expiration: Date.now() + 60 + 60 + 14 // 14 days from now
+    }
+    
+    return jwt.sign(token, process.env.TOKEN_SECRET);
+}
 
 exports.slimUser = `
     {
@@ -44,4 +44,3 @@ exports.verifyLoggedIn = (req, res, next) => {
         return next();
     }
 };
-

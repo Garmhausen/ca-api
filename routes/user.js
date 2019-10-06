@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { hasPermission, handleError, slimUser, verifyLoggedIn } = require('../utils');
-
-const mutation = require('../resolvers/Mutation');
-const query = require('../resolvers/Query');
+const { query, mutation } = require('../resolvers');
 
 // all routes in this file begin with /user
 
