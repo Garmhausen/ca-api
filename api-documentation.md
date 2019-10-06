@@ -130,7 +130,10 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 
 ```json
 {
-    "message": "success"
+    "name": "Bruce Wayne",
+    "email": "batman@justiceleague.com",
+    "permissions": ["USER"],
+    "authToken": "<an encrypted token>"
 }
 ```
 
@@ -195,7 +198,10 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 
 ```json
 {
-    "message": "success"
+    "name": "Bruce Wayne",
+    "email": "batman@justiceleague.com",
+    "permissions": ["USER"],
+    "authToken": "<an encrypted token>"
 }
 ```
 
