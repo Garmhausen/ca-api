@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const { handleError, signInUser, slimUser } = require('../utils');
-const query = require('../resolvers/Query');
-const mutation = require('../resolvers/Mutation');
+const { handleError, createToken } = require('../utils');
+const { query, mutation } = require('../resolvers');
 
 // all routes in this file begin with /account
 
@@ -54,9 +53,14 @@ router.post('/signup', [
 
     try {
         const user = await mutation.signup(args);
-        signInUser(user.id, res);
+        const authToken = createToken(user.id);
         res.status(201);  // Created
-        response = { message: "success" };
+        response = {
+            email: user.email,
+            name: user.name,
+            permissions: user.permissions,
+            authToken
+        }
     } catch (error) {
         response = handleError(error);
         res.status(400); // Bad Request
@@ -73,9 +77,16 @@ router.post('/signin', async function(req, res) {
 
     try {
         const user = await mutation.signin(args);
-        signInUser(user.id, res);
-        response = { message: "success" };
+        const authToken = createToken(user.id);
+        response = {
+            email: user.email,
+            name: user.name,
+            permissions: user.permissions,
+            authToken
+        }
     } catch (error) {
+        response = handleError(error);
+        // could be caused by something other than this, need better error handling
         response = "Invalid username or password!";
         res.status(400); // Bad Request
     }
@@ -87,42 +98,44 @@ router.post('/signin', async function(req, res) {
 router.post('/signout', function(req, res) {
     console.log('POST /account/signout');
 
-    res.clearCookie('farrier_app_token');
+    res.clearCookie('authToken');
     res.json({
         message: 'Goodbye!'
     });
 });
 
+// Password Reset will be implemented in a future story
+
 // POST /account/requestreset
-router.post('/requestreset', async function(req, res) {
-    console.log('POST /account/requestReset');
-    console.log('email:', req.body.email);
-    let response;
+// router.post('/requestreset', async function(req, res) {
+//     console.log('POST /account/requestReset');
+//     console.log('email:', req.body.email);
+//     let response;
 
-    try {
-        response = await mutation.requestReset(req.body.email);
-    } catch (error) {
-        reponse = handleError(error);
-        res.status(400);  // bad request
-    }
+//     try {
+//         response = await mutation.requestReset(req.body.email);
+//     } catch (error) {
+//         reponse = handleError(error);
+//         res.status(400);  // bad request
+//     }
 
-    res.json(response);
-});
+//     res.json(response);
+// });
 
 // POST /account/resetpassword
-router.post('/resetpassword', async function(req, res) {
-    console.log('POST /account/resetpassword');
-    let response;
+// router.post('/resetpassword', async function(req, res) {
+//     console.log('POST /account/resetpassword');
+//     let response;
 
-    try {
-        response = await mutation.resetPassword(req.body).$fragment(slimUser);
-        signInUser(response.id);
-    } catch (error) {
-        response = handleError(error);
-        res.status(400);  // bad request
-    }
+//     try {
+//         response = await mutation.resetPassword(req.body);
+//         // TODO: make an authToken and attach
+//     } catch (error) {
+//         response = handleError(error);
+//         res.status(400);  // bad request
+//     }
 
-    res.json(response);
-});
+//     res.json(response);
+// });
 
 module.exports = router;
