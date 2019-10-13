@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const { handleError, createToken } = require('../utils');
+const { authBusiness } = require('./business');
+const { handleError } = require('../utils');
 const { query, mutation } = require('../resolvers');
 
 // all routes in this file begin with /account
@@ -54,7 +55,7 @@ router.post('/signup', [
 
     try {
         const user = await mutation.signup(args);
-        const authToken = createToken(user.id);
+        const authToken = authBusiness.createToken(user.id);
         res.status(201);  // Created
         response = {
             authToken,
@@ -82,7 +83,7 @@ router.post('/signin', async function(req, res) {
 
     try {
         const user = await mutation.signin(args);
-        const authToken = createToken(user.id);
+        const authToken = authBusiness.createToken(user.id);
         response = {
             authToken,
             data: {

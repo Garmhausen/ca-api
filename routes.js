@@ -1,10 +1,8 @@
-'use strict';
-
 const express = require('express');
 const router = express.Router();
 
 const { query } = require('./resolvers');
-const { createToken } = require('./utils');
+const { authBusiness } = require('./business');
 
 router.use('/account', require('./routes/account'));
 router.use('/user',     require('./routes/user'));
@@ -35,7 +33,7 @@ router.get('/me', async function(req, res) {
     let response;
 
     try {
-        const authToken = createToken(req.userId);
+        const authToken = authBusiness.createToken(req.userId);
         const user = await query.retrieveUser(req.userId).$fragment(`
             {
                 name
