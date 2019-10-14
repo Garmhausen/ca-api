@@ -1,47 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const { authBusiness } = require('../business');
 const { handleError } = require('../utils');
-const { query, mutation } = require('../resolvers');
+const { mutation } = require('../resolvers');
+const { validationHelper } = require('../helpers');
 
 // all routes in this file begin with /account
 
 router.use(express.json());
 
 // POST /account/signup
-router.post('/signup', [
-    // TODO:  good lord, move all of this validation stuff someplace else in the file structure
-    check('name', 'Name must not be empty')
-        .isString()
-        .trim(),
-    check('email')
-        .isEmail()
-        .withMessage('Email is not a valid email')
-        .normalizeEmail()
-        .custom(email => {
-            return query.retrieveUserByEmail(email).then(user => {
-                if (user) {
-                    return Promise.reject();
-                }
-            });
-        })
-        .withMessage('Email is already in use'),
-    check('confirmPassword')
-        .custom((confirmPassword, { req }) => {
-            if (confirmPassword !== req.body.password) {
-                throw new Error('Passwords must match');
-            }
-            return true;
-        }),
-    check('password', 'Password is required')
-        .isLength({ min: 8 })
-        .withMessage('Password must be at least 8 characters')
-        .isLength({ max: 24 })
-        .withMessage('Password maximum length is 24 characters')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/)
-        .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one symbol')
-], async function(req, res) {
+router.post('/signup', validationHelper.accountSignUpValidation, async function(req, res) {
     console.log('POST /account/signup');
 
     const validationErrors = validationResult(req);
