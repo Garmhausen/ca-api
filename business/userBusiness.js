@@ -1,7 +1,7 @@
 const { userService } = require('../service');
 
-const getUserById = (userId) => {
-  const user = userService.getUserById(userId);
+const getUserById = async (userId) => {
+  const user = await userService.getUserById(userId);
 
   return user;
 }

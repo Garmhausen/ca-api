@@ -19,13 +19,13 @@ app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
-// add userId and user to requests
-app.use((req, res, next) => {
+// add userId and user to requests if logged in
+app.use(async (req, res, next) => {
     const { authToken } = req.cookies;
     if (authToken) {
         const userId = authBusiness.getUserIdFromValidToken(authToken);
         req.userId = userId;
-        req.user = userBusiness.getUserById(req.userId);
+        req.user = userId ? await userBusiness.getUserById(userId) : null;
     }
 
     return next();
