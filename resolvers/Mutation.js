@@ -71,6 +71,7 @@ async function signup(args) {
 };
 
 function updatePermissions(id, permissions) {
+    
     return prisma.updateUser({
         where: { id },
         data: {

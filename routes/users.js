@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const { handleError, hasPermission, slimUser, verifyLoggedIn } = require('../utils');
-const { query } = require('../resolvers');
+const { handleError, verifyLoggedIn } = require('../utils');
+const { userBusiness } = require('../business');
 
 // all routes in this file begin with /users
 
@@ -12,11 +12,11 @@ router.use((req, res, next) => verifyLoggedIn(req, res, next));
 // GET /users
 router.get('/', async function (req, res) {
     console.log('GET /users');
+    // TODO: think about adding a filter and paging, etc...
     let response;
 
     try {
-        hasPermission(req.user, ['ADMIN']);
-        response = await query.retrieveUsers(req.userId).$fragment(slimUser);
+        response = await userBusiness.getAllUsers(req.user);
     } catch (error) {
         response = handleError(error);
         res.status(400);  // bad request

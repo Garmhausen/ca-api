@@ -1,18 +1,32 @@
-const { query } = require('../resolvers');
+const { query, mutation } = require('../resolvers');
 
-const getUserById = async (userId) => {
-  const user = await query.retrieveUser(userId);
+const getUserById = (userId) => {
+  const user = query.retrieveUser(userId);
     
   return user;
 }
 
-const getUserByEmail = async (email) => {
-  const user = await query.retrieveUserByEmail(email);
+const getUserByEmail = (email) => {
+  const user = query.retrieveUserByEmail(email);
+
+  return user;
+}
+
+const getAllUsers = () => {
+  const users = query.retrieveUsers();
+
+  return users;
+}
+
+const updateUser = (userId, updates) => {
+  const user = mutation.updateUser(userId, updates);
 
   return user;
 }
 
 module.exports = {
   getUserById,
-  getUserByEmail
+  getUserByEmail,
+  getAllUsers,
+  updateUser
 };

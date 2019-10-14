@@ -29,6 +29,7 @@ router.get('/me', async function (req, res) {
 
   const authToken = authBusiness.createToken(req.userId);
   const user = userBusiness.makeSlimUser(req.user);
+  delete user.id;
   
   const response = {
     authToken,

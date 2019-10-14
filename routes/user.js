@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { hasPermission, handleError, slimUser, verifyLoggedIn } = require('../utils');
 const { query, mutation } = require('../resolvers');
+const { userBusiness } = require('../business');
 
 // all routes in this file begin with /user
 
@@ -39,15 +40,15 @@ router.patch('/:id', async function(req, res) {
     if (updates.id) {
         delete updates.id;
     }
+
     if (updates.permissions) {
+        // updating permission is not intended to be done in this method
+        // see /user/:id/permissions method below
         delete updates.permissions;
     }
 
     try {
-        if (!updatingSelf) {
-            hasPermission(req.user, ['ADMIN']);
-        }
-        response = await mutation.updateUser(req.params.id, updates).$fragment(slimUser);
+        response = await userBusiness.updateUser(req.userId, updates, updatingSelf);
     } catch (error) {
         response = handleError(error);
         res.status(400); // bad request

@@ -27,10 +27,7 @@ app.use(async (req, res, next) => {
         req.userId = userId;
         const user = userId ? await userBusiness.getUserById(userId) : null;
         if (user) {
-            req.user = {
-                id: userId,
-                ...userBusiness.makeSlimUser(user)
-            };
+            req.user = userBusiness.makeSlimUser(user);
         }
     }
 
