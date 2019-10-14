@@ -10,6 +10,7 @@ router.use(express.json());
 
 // POST /account/signup
 router.post('/signup', [
+    // TODO:  good lord, move all of this validation stuff someplace else in the file structure
     check('name', 'Name must not be empty')
         .isString()
         .trim(),
@@ -47,7 +48,7 @@ router.post('/signup', [
         return res.status(422).json({ errors: validationErrors.array() });
     }
 
-    let args = req.body;
+    let args = req.body; // probably should be more explicit about what goes in to the signup mutation for processing
     delete args.confirmPassword;
     let response;
 
@@ -56,10 +57,14 @@ router.post('/signup', [
         const authToken = createToken(user.id);
         res.status(201);  // Created
         response = {
-            email: user.email,
-            name: user.name,
-            permissions: user.permissions,
-            authToken
+            authToken,
+            data: {
+                user: {
+                    email: user.email,
+                    name: user.name,
+                    permissions: user.permissions
+                }
+            }
         }
     } catch (error) {
         response = handleError(error);
@@ -79,10 +84,14 @@ router.post('/signin', async function(req, res) {
         const user = await mutation.signin(args);
         const authToken = createToken(user.id);
         response = {
-            email: user.email,
-            name: user.name,
-            permissions: user.permissions,
-            authToken
+            authToken,
+            data: {
+                user: {
+                    email: user.email,
+                    name: user.name,
+                    permissions: user.permissions
+                }
+            }
         }
     } catch (error) {
         response = handleError(error);

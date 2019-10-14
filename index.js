@@ -25,8 +25,10 @@ app.use((req, res, next) => {
     const { authToken } = req.cookies;
 
     if (authToken) {
-        const { userId } = jwt.verify(authToken, process.env.TOKEN_SECRET);
-        req.userId = userId;
+        const { userId, expiration } = jwt.verify(authToken, process.env.TOKEN_SECRET);
+        if (expiration >= Date.now()) {
+            req.userId = userId;
+        }
     }
 
     return next();
@@ -51,8 +53,8 @@ app.use(async (req, res, next) => {
     
     return next();
 });
-
 // ------ END MIDDLEWARE ------
+
 app.use(routes);
 
 app.listen(process.env.PORT || 3000, function() {
