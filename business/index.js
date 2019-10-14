@@ -1,3 +1,4 @@
 module.exports = {
-  authBusiness: require('./authBusiness')
+  authBusiness: require('./authBusiness'),
+  userBusiness: require('./userBusiness')
 };

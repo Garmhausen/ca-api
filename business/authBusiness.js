@@ -9,6 +9,24 @@ const createToken = (userId) => {
   return jwt.sign(token, process.env.TOKEN_SECRET);
 };
 
+const getUserIdFromValidToken = (authToken) => {
+  if (authToken) {
+    try {
+      const { userId, expiration } = jwt.verify(authToken, process.env.TOKEN_SECRET);
+
+      if (expiration >= Date.now()) {
+        return userId;
+      }
+      
+    } catch (error) {
+      console.log('error', error);  // TODO: better error handling
+    };
+  }
+
+  return null
+}
+
 module.exports = {
-  createToken
+  createToken,
+  getUserIdFromValidToken
 };

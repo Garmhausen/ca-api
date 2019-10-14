@@ -1,10 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
 const cors = require('cors');
 
-const { prisma } = require('./prisma');
+const { authBusiness, userBusiness } = require('./business');
 const routes = require('./routes');
 
 // start app
@@ -20,37 +19,15 @@ app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
-// add userId to requests
+// add userId and user to requests
 app.use((req, res, next) => {
     const { authToken } = req.cookies;
-
     if (authToken) {
-        const { userId, expiration } = jwt.verify(authToken, process.env.TOKEN_SECRET);
-        if (expiration >= Date.now()) {
-            req.userId = userId;
-        }
+        const userId = authBusiness.getUserIdFromValidToken(authToken);
+        req.userId = userId;
+        req.user = userBusiness.getUserById(req.userId);
     }
 
-    return next();
-});
-
-// add user to request if they are logged in
-app.use(async (req, res, next) => {
-    if (!req.userId) return next();
-
-    const user = await prisma
-        .user({ id: req.userId })
-        .$fragment(`{
-            id
-            name
-            email
-            permissions
-        }`)
-        .catch((err) => {
-            console.log('error', err); // TODO: better error handling
-        });
-    req.user = user;
-    
     return next();
 });
 // ------ END MIDDLEWARE ------
