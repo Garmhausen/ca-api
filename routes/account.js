@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const { authBusiness } = require('./business');
+const { authBusiness } = require('../business');
 const { handleError } = require('../utils');
 const { query, mutation } = require('../resolvers');
 
