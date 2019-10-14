@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { validationResult } = require('express-validator');
-const { authBusiness } = require('../business');
+const { authBusiness, userBusiness } = require('../business');
 const { handleError } = require('../utils');
-const { mutation } = require('../resolvers');
 const { validationHelper } = require('../helpers');
 
 // all routes in this file begin with /account
@@ -19,22 +18,17 @@ router.post('/signup', validationHelper.accountSignUpValidation, async function(
         return res.status(422).json({ errors: validationErrors.array() });
     }
 
-    let args = req.body; // probably should be more explicit about what goes in to the signup mutation for processing
-    delete args.confirmPassword;
     let response;
-
+    let args = req.body;
+    
     try {
-        const user = await mutation.signup(args);
+        const user = await authBusiness.userSignUp(args);
         const authToken = authBusiness.createToken(user.id);
         res.status(201);  // Created
         response = {
             authToken,
             data: {
-                user: {
-                    email: user.email,
-                    name: user.name,
-                    permissions: user.permissions
-                }
+                user: userBusiness.makeSlimUser(user)
             }
         }
     } catch (error) {
@@ -48,20 +42,17 @@ router.post('/signup', validationHelper.accountSignUpValidation, async function(
 // POST /account/signin
 router.post('/signin', async function(req, res) {
     console.log('POST /account/signin');
-    let args = req.body;
+    const email = req.body.email;
+    const password = req.body.password;
     let response;
 
     try {
-        const user = await mutation.signin(args);
+        const user = await authBusiness.signin(email, password);
         const authToken = authBusiness.createToken(user.id);
         response = {
             authToken,
             data: {
-                user: {
-                    email: user.email,
-                    name: user.name,
-                    permissions: user.permissions
-                }
+                user: userBusiness.makeSlimUser(user)
             }
         }
     } catch (error) {

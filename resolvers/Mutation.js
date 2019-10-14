@@ -66,32 +66,8 @@ async function resetPassword(args) {
     });
 }
 
-async function signin({ email, password }) {
-    const user = await prisma.user({ email });
-
-    if (!user) {
-        throw new Error(`No user found for email ${email}.`);
-    }
-
-    const valid = await bcrypt.compare(password, user.password);
-
-    if (!valid) {
-        throw new Error(`Invalid password!`);
-    }
-
-    return user;
-};
-
 async function signup(args) {
-    args.email = args.email.toLowerCase();  // lowercase all emails going into the db
-    const password = await bcrypt.hash(args.password, 10);
-    // TODO: probably need to add a password compare here if possible, or a better spot.
-
-    return prisma.createUser({
-        ...args,
-        password: password,
-        permissions: { set: ['USER'] }
-    });
+    return prisma.createUser(args);
 };
 
 function updatePermissions(id, permissions) {
@@ -114,7 +90,6 @@ module.exports = {
     deleteUser,
     requestReset,
     resetPassword,
-    signin,
     signup,
     updatePermissions,
     updateUser

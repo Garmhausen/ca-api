@@ -1,8 +1,8 @@
-const { prisma } = require('../prisma');
+const { query } = require('../resolvers');
 
 const getUserById = async (userId) => {
-  const user = await prisma
-    .user({ id: userId })
+  const user = await query
+    .retrieveUser(userId)
     .$fragment(`{
             id
             name
@@ -16,6 +16,13 @@ const getUserById = async (userId) => {
     return user;
 }
 
+const getUserByEmail = async (email) => {
+  const user = await query.retrieveUserByEmail(email);
+
+  return user;
+}
+
 module.exports = {
-  getUserById
+  getUserById,
+  getUserByEmail
 };
