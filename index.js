@@ -27,7 +27,6 @@ app.use((req, res, next) => {
     if (authToken) {
         const { userId, expiration } = jwt.verify(authToken, process.env.TOKEN_SECRET);
         if (expiration >= Date.now()) {
-            console.log('not expired');
             req.userId = userId;
         }
     }
