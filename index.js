@@ -25,7 +25,13 @@ app.use(async (req, res, next) => {
     if (authToken) {
         const userId = authBusiness.getUserIdFromValidToken(authToken);
         req.userId = userId;
-        req.user = userId ? await userBusiness.getUserById(userId) : null;
+        const user = userId ? await userBusiness.getUserById(userId) : null;
+        if (user) {
+            req.user = {
+                id: userId,
+                ...userBusiness.makeSlimUser(user)
+            };
+        }
     }
 
     return next();

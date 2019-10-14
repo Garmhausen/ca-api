@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { authBusiness } = require('../business');
+const { authBusiness, userBusiness } = require('../business');
 
 // all routes in this file begin with /
 
@@ -28,11 +28,7 @@ router.get('/me', async function (req, res) {
   }
 
   const authToken = authBusiness.createToken(req.userId);
-  const user = {
-    name: req.user.name,
-    email: req.user.email,
-    permissions: req.user.permissions
-  };
+  const user = userBusiness.makeSlimUser(req.user);
   
   const response = {
     authToken,

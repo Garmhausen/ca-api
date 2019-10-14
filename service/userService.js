@@ -1,19 +1,9 @@
 const { query } = require('../resolvers');
 
 const getUserById = async (userId) => {
-  const user = await query
-    .retrieveUser(userId)
-    .$fragment(`{
-            id
-            name
-            email
-            permissions
-        }`)
-    .catch((err) => {
-      console.log('error', err); // TODO: better error handling
-    });
+  const user = await query.retrieveUser(userId);
     
-    return user;
+  return user;
 }
 
 const getUserByEmail = async (email) => {
