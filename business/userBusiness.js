@@ -1,7 +1,11 @@
 const { userService } = require('../service');
 const { hasPermission } = require('../utils');
 
-const getUserById = async (userId) => {
+const getUserById = async (userId, requestingUser) => {
+  if (userId !== requestingUser.id) {
+    hasPermission(requestingUser, ['ADMIN']);
+  }
+
   const user = await userService.getUserById(userId);
 
   return user;

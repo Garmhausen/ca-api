@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { hasPermission, handleError, slimUser, verifyLoggedIn } = require('../utils');
-const { query, mutation } = require('../resolvers');
-const { userBusiness } = require('../business');
+const { mutation } = require('../resolvers');
+const { authBusiness, userBusiness } = require('../business');
 
 // all routes in this file begin with /user
 
@@ -19,7 +19,14 @@ router.get('/:id', async function(req, res) {
             hasPermission(req.user, ['ADMIN']);
         }
 
-        response = await query.retrieveUser(req.params.id).$fragment(slimUser);
+        const user = await userBusiness.getUserById(req.params.id, req.user).$fragment(userBusiness.slimUserFragment);
+
+        response = {
+            authToken: authBusiness.createToken(req.userId),
+            data: {
+                user
+            }
+        };
     } catch (error) {
         response = handleError(error);
         res.status(400);  // bad request
@@ -86,8 +93,8 @@ router.post('/:id/permissions', async function(req, res) {
     let response;
 
     try {
-        hasPermission(req.user, ['ADMIN', 'PERMISSIONUPDATE']);
-        response = mutation.updatePermissions(req.params.id, req.body.permissions).$fragment(slimUser);
+        hasPermission(req.user, ['ADMIN', 'PERMISSIONUPDATE']);///////////
+        response = mutation.updatePermissions(req.params.id, req.body.permissions).$fragment(slimUser);//////////
     } catch (error) {
         response = handleError(error);
         res.status(400);

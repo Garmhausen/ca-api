@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const { authBusiness, userBusiness } = require('./business');
+const { userService } = require('./service');
 const routes = require('./routes');
 
 // start app
@@ -25,7 +26,7 @@ app.use(async (req, res, next) => {
     if (authToken) {
         const userId = authBusiness.getUserIdFromValidToken(authToken);
         req.userId = userId;
-        const user = userId ? await userBusiness.getUserById(userId) : null;
+        const user = userId ? await userService.getUserById(userId) : null;
         if (user) {
             req.user = userBusiness.makeSlimUser(user);
         }
