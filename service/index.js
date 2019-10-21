@@ -1,4 +1,4 @@
 module.exports = {
-  authService: require('../business/authBusiness'),
+  authService: require('./authService'),
   userService: require('./userService')
 };
