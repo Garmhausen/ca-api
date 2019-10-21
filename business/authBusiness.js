@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const { authService } = require('../service');
-const userBusiness = require('./userBusiness');
+const { makeSlimUser } = require('./userBusiness');
+const { authService, userService } = require('../service');
 
 const createToken = (userId) => {
   const token = {
@@ -41,23 +41,23 @@ const userSignUp = async (args) => {
   }
   const user = await authService.signup(newUser);
 
-  return user;
+  return makeSlimUser(user);
 }
 
 const signin = async (email, password) => {
-  const user = await userBusiness.getUserByEmail(email);
+  const user = await userService.getUserByEmail(email);
 
   if (!user) {
     throw new Error(`No user found for email ${email}.`);
   }
-
+  
   const valid = await bcrypt.compare(password, user.password);
-
+  
   if (!valid) {
     throw new Error(`Invalid password!`);
   }
 
-  return user;
+  return makeSlimUser(user);
 }
 
 module.exports = {

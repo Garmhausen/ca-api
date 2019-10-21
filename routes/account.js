@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { validationResult } = require('express-validator');
 
-const { authBusiness, userBusiness } = require('../business');
+const { authBusiness } = require('../business');
 const { handleError } = require('../utils');
 const { validationHelper } = require('../helpers');
 
@@ -25,7 +25,6 @@ router.post('/signup', validationHelper.accountSignUpValidation, async function(
     try {
         let user = await authBusiness.userSignUp(args);
         const authToken = authBusiness.createToken(user.id);
-        user = userBusiness.makeSlimUser(user);
         delete user.id;
         res.status(201);  // Created
         response = {
@@ -51,7 +50,6 @@ router.post('/signin', async function(req, res) {
 
     try {
         let user = await authBusiness.signin(email, password);
-        user = userBusiness.makeSlimUser(user);
         const authToken = authBusiness.createToken(user.id);
         delete user.id;
         response = {
