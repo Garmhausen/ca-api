@@ -28,7 +28,7 @@ const getAllUsers = async (requestingUser) => {
 const updateUser = async (userId, updates, requestingUser) => {
   const isUpdatingSelf = (userId === requestingUser.id);
   if (!isUpdatingSelf) {
-    hasPermission(userId, ['ADMIN']);
+    hasPermission(requestingUser, ['ADMIN']);
   }
 
   const user = userService.updateUser(userId, updates).$fragment(slimUserFragment);

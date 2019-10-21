@@ -19,7 +19,7 @@ router.get('/:id', async function(req, res) {
             hasPermission(req.user, ['ADMIN']);
         }
 
-        const user = await userBusiness.getUserById(req.params.id, req.user).$fragment(userBusiness.slimUserFragment);
+        const user = userBusiness.makeSlimUser(await userBusiness.getUserById(req.params.id, req.user));
 
         response = {
             authToken: authBusiness.createToken(req.userId),
@@ -54,7 +54,7 @@ router.patch('/:id', async function(req, res) {
     }
 
     try {
-        const user = await userBusiness.updateUser(req.userId, updates, req.user);
+        const user = await userBusiness.updateUser(req.params.id, updates, req.user);
 
         response = {
             authToken: authBusiness.createToken(req.userId),

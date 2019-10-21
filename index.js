@@ -23,6 +23,7 @@ app.use(cookieParser());
 // add userId and user to requests if logged in
 app.use(async (req, res, next) => {
     const { authToken } = req.cookies;
+    
     if (authToken) {
         const userId = authBusiness.getUserIdFromValidToken(authToken);
         req.userId = userId;
