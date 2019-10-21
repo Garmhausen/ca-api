@@ -2,7 +2,8 @@ const { userService } = require('../service');
 const { hasPermission } = require('../utils');
 
 const getUserById = async (userId, requestingUser) => {
-  if (userId !== requestingUser.id) {
+  const isGettingSelf = userId === requestingUser.id;
+  if (!isGettingSelf) {
     hasPermission(requestingUser, ['ADMIN']);
   }
 
@@ -24,8 +25,9 @@ const getAllUsers = async (requestingUser) => {
   return users;
 }
 
-const updateUser = async (userId, updates, isUpdatingSelf = false) => {
-  if (!updatingSelf) {
+const updateUser = async (userId, updates, requestingUser) => {
+  const isUpdatingSelf = (userId === requestingUser.id);
+  if (!isUpdatingSelf) {
     hasPermission(userId, ['ADMIN']);
   }
 
@@ -33,6 +35,18 @@ const updateUser = async (userId, updates, isUpdatingSelf = false) => {
 
   return user;
 }
+
+const deleteUser = async (userId, requestingUser) => {
+  const isDeletingSelf = userId === requestingUser.id;
+  
+  if (!isDeletingSelf) {
+    hasPermission(requestingUser, ['ADMIN']);
+  }
+
+  const user = await userService.deleteUser(userId);
+
+  return user;
+};
 
 const makeSlimUser = (user) => {
   const slimUser = {
@@ -59,6 +73,7 @@ module.exports = {
   getUserByEmail,
   getAllUsers,
   updateUser,
+  deleteUser,
   makeSlimUser,
   slimUserFragment
 };

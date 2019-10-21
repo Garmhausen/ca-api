@@ -24,9 +24,16 @@ const updateUser = (userId, updates) => {
   return user;
 }
 
+const deleteUser = (userId) => {
+  const user = mutation.deleteUser(userId);
+
+  return user;
+}
+
 module.exports = {
   getUserById,
   getUserByEmail,
   getAllUsers,
-  updateUser
+  updateUser,
+  deleteUser
 };

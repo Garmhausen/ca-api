@@ -40,7 +40,6 @@ router.use(express.json()); // required for parsing json body in request
 // PATCH /user/:id
 router.patch('/:id', async function(req, res) {
     console.log('POST /user');
-    const updatingSelf = req.userId == req.params.id;
     const updates = { ...req.body };
     let response;
 
@@ -55,7 +54,14 @@ router.patch('/:id', async function(req, res) {
     }
 
     try {
-        response = await userBusiness.updateUser(req.userId, updates, updatingSelf);
+        const user = await userBusiness.updateUser(req.userId, updates, req.user);
+
+        response = {
+            authToken: authBusiness.createToken(req.userId),
+            data: {
+                user
+            }
+        };
     } catch (error) {
         response = handleError(error);
         res.status(400); // bad request
@@ -67,18 +73,17 @@ router.patch('/:id', async function(req, res) {
 // DELETE /user/:id
 router.delete('/:id', async function(req, res) {
     console.log(`DELETE /user/${req.params.id}`);
-    const deletingSelf = req.userId == req.params.id;
     let response;
 
     try {
-        if (!deletingSelf) {
-            hasPermission(req.user, ['ADMIN']);
-        }
-        const result = await mutation.deleteUser(req.params.id);
-        if (deletingSelf) {
-            res.clearCookie('token');
-        }
-        response = ({ message: "success" });
+        const user = await userBusiness.deleteUser(req.params.id, req.user);
+
+        response = {
+            authToken: authBusiness.createToken(req.userId),
+            data: {
+                user
+            }
+        };
     } catch (error) {
         response = handleError(error);
         res.status(400); // bad request
