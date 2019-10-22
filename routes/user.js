@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { hasPermission, handleError, slimUser, verifyLoggedIn } = require('../utils');
-const { query, mutation } = require('../resolvers');
+const { mutation } = require('../resolvers');
+const { authBusiness, userBusiness } = require('../business');
 
 // all routes in this file begin with /user
 
@@ -18,7 +19,14 @@ router.get('/:id', async function(req, res) {
             hasPermission(req.user, ['ADMIN']);
         }
 
-        response = await query.retrieveUser(req.params.id).$fragment(slimUser);
+        const user = userBusiness.makeSlimUser(await userBusiness.getUserById(req.params.id, req.user));
+
+        response = {
+            authToken: authBusiness.createToken(req.userId),
+            data: {
+                user
+            }
+        };
     } catch (error) {
         response = handleError(error);
         res.status(400);  // bad request
@@ -32,22 +40,28 @@ router.use(express.json()); // required for parsing json body in request
 // PATCH /user/:id
 router.patch('/:id', async function(req, res) {
     console.log('POST /user');
-    const updatingSelf = req.userId == req.params.id;
     const updates = { ...req.body };
     let response;
 
     if (updates.id) {
         delete updates.id;
     }
+
     if (updates.permissions) {
+        // updating permission is not intended to be done in this method
+        // see /user/:id/permissions method below
         delete updates.permissions;
     }
 
     try {
-        if (!updatingSelf) {
-            hasPermission(req.user, ['ADMIN']);
-        }
-        response = await mutation.updateUser(req.params.id, updates).$fragment(slimUser);
+        const user = await userBusiness.updateUser(req.params.id, updates, req.user);
+
+        response = {
+            authToken: authBusiness.createToken(req.userId),
+            data: {
+                user
+            }
+        };
     } catch (error) {
         response = handleError(error);
         res.status(400); // bad request
@@ -59,18 +73,17 @@ router.patch('/:id', async function(req, res) {
 // DELETE /user/:id
 router.delete('/:id', async function(req, res) {
     console.log(`DELETE /user/${req.params.id}`);
-    const deletingSelf = req.userId == req.params.id;
     let response;
 
     try {
-        if (!deletingSelf) {
-            hasPermission(req.user, ['ADMIN']);
-        }
-        const result = await mutation.deleteUser(req.params.id);
-        if (deletingSelf) {
-            res.clearCookie('token');
-        }
-        response = ({ message: "success" });
+        const user = await userBusiness.deleteUser(req.params.id, req.user);
+
+        response = {
+            authToken: authBusiness.createToken(req.userId),
+            data: {
+                user
+            }
+        };
     } catch (error) {
         response = handleError(error);
         res.status(400); // bad request
@@ -85,8 +98,8 @@ router.post('/:id/permissions', async function(req, res) {
     let response;
 
     try {
-        hasPermission(req.user, ['ADMIN', 'PERMISSIONUPDATE']);
-        response = mutation.updatePermissions(req.params.id, req.body.permissions).$fragment(slimUser);
+        hasPermission(req.user, ['ADMIN', 'PERMISSIONUPDATE']);///////////
+        response = mutation.updatePermissions(req.params.id, req.body.permissions).$fragment(slimUser);//////////
     } catch (error) {
         response = handleError(error);
         res.status(400);

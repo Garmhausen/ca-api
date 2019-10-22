@@ -11,6 +11,7 @@ function retrieveUsers() {
 }
 
 function retrieveUserByEmail(email) {
+    
     return prisma.user({ email });
 }
 

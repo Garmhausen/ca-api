@@ -18,15 +18,6 @@ exports.hasPermission = (user, permissionsNeeded) => {
     }
 };
 
-exports.createToken = (userId) => {
-    const token = {
-        userId,
-        expiration: Date.now() + (1000 * 60 * 60 * 24 * 14) // 14 days from now
-    }
-    
-    return jwt.sign(token, process.env.TOKEN_SECRET);
-}
-
 exports.slimUser = `
     {
         id
@@ -37,7 +28,7 @@ exports.slimUser = `
 `;
 
 exports.verifyLoggedIn = (req, res, next) => {
-    if (!req.userId) {
+    if (!req.user) {
         res.status(400); // bad request
         res.json({ message: 'You must be logged in!' });
     } else {
