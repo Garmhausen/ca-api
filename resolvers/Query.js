@@ -15,8 +15,19 @@ function retrieveUserByEmail(email) {
     return prisma.user({ email });
 }
 
+function retrieveUserByResetToken(resetToken) {
+    
+    return prisma.users({
+        where: {
+            resetToken,
+            resetTokenExpiration_gte: Date.now() - 3600000
+        }
+    });
+}
+
 module.exports = {
     retrieveUser,
     retrieveUsers,
-    retrieveUserByEmail
+    retrieveUserByEmail,
+    retrieveUserByResetToken
 }

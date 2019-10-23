@@ -33,7 +33,9 @@ router.get('/me', async function (req, res) {
   
   const response = {
     authToken,
-    user
+    data: {
+      user
+    }
   };
 
   res.json(response);

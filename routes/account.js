@@ -101,19 +101,28 @@ router.post('/requestreset', async function(req, res) {
 });
 
 // POST /account/resetpassword
-// router.post('/resetpassword', async function(req, res) {
-//     console.log('POST /account/resetpassword');
-//     let response;
+router.post('/resetpassword', async function(req, res) {
+    console.log('POST /account/resetpassword');
+    let response;
 
-//     try {
-//         response = await mutation.resetPassword(req.body);
-//         // TODO: make an authToken and attach
-//     } catch (error) {
-//         response = handleError(error);
-//         res.status(400);  // bad request
-//     }
+    try {
+        const resetToken = req.body.resetToken;
+        const password = req.body.password;
+        const confirmPassword = req.body.confirmPassword;
+        const user = await authBusiness.resetPassword(resetToken, password, confirmPassword);
+        const authToken = authBusiness.createToken(user.id);
+        response = {
+            authToken,
+            data: {
+                user
+            }
+        }
+    } catch (error) {
+        response = handleError(error);
+        res.status(400);  // bad request
+    }
 
-//     res.json(response);
-// });
+    res.json(response);
+});
 
 module.exports = router;

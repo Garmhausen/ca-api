@@ -100,10 +100,35 @@ const requestPasswordReset = async (email) => {
   };
 }
 
+const resetPassword = async (resetToken, newPassword, confirmPassword) => {
+  if (newPassword !== confirmPassword) {
+    throw new Error('Passwords do not match!');
+  }
+
+  const user = await userService.getUserByResetToken(resetToken);
+
+  if (!user) {
+    throw new Error('This token is invalid or expired!');
+  }
+
+  const password = await bcrypt.hash(newPassword, 10);
+
+  const updatedUser = await userService.updateUser(user.id, {
+    password,
+    resetToken: null,
+    resetTokenExpiration: null
+  });
+
+  const updatedSlimUser = makeSlimUser(updatedUser);
+
+  return updatedSlimUser;
+};
+
 module.exports = {
   createToken,
   getUserIdFromValidToken,
   userSignUp,
   signin,
-  requestPasswordReset
+  requestPasswordReset,
+  resetPassword
 };
