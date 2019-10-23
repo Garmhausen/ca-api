@@ -70,12 +70,14 @@ Returns name and email of the user currently logged in.
 ```json
 {
     "authToken": "<an encrypted token>",
-    "user": {
+    "data": {
+      "user": {
         "name": "Bruce Wayne",
         "email": "batman@justiceleague.com",
         "permissions": [
             "USER"
         ]
+      }
     }
 }
 ```
@@ -137,12 +139,14 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 ```json
 {
     "authToken": "<an encrypted token>",
-    "user": {
+    "data": {
+      "user": {
         "name": "Bruce Wayne",
         "email": "batman@justiceleague.com",
         "permissions": [
             "USER"
         ]
+      }
     }
 }
 ```
@@ -209,12 +213,14 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 ```json
 {
     "authToken": "<an encrypted token>",
-    "user": {
+    "data": {
+      "user": {
         "name": "Bruce Wayne",
         "email": "batman@justiceleague.com",
         "permissions": [
             "USER"
         ]
+      }
     }
 }
 ```
@@ -257,3 +263,135 @@ none
 ## Error Response
 
 None.  This call will always succeed and always trigger removal of the auth token from the headers if it exists.
+
+<br><br><br>
+
+**URL** : `/account/requestreset`
+
+**Method** : `POST`
+
+**Auth required** : no
+
+**Data constraints**
+
+```json
+{
+  "email": "[valid email]",
+}
+```
+
+**Data example**
+
+```json
+{
+  "email": "batman@justiceleague.com"
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "message": "Email sent!",
+    "data": {
+      "email": "batman@justiceleague.com",
+      "resetURL": "<url to password reset form>",
+      "mailResult": "<nodemailer mail result object>"
+    }
+}
+```
+
+## Error Response
+
+**Condition** : If the email doesn't belong to a user.
+
+**Code** : `400 BAD REQUEST`
+
+**Content example**
+```json
+"No user found for email <email>!"
+```
+
+<br><br><br>
+
+**URL** : `/account/resetpassword`
+
+**Method** : `POST`
+
+**Auth required** : no
+
+**Data constraints**
+
+```json
+{
+  "resetToken": "[valid resetToken]",
+  "password": "password": "[valid password in plain text, 8-24 characters, at least one number, uppercase, lowercase, and symbol]",
+  "confirmPassword": "[valid matching password in plain text]"
+}
+```
+
+**Data example**
+
+```json
+{
+  "resetToken": "<valid resetToken>",
+  "password": "DarkKnight39!",
+  "confirmPassword": "DarkKnight39!"
+}
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "authToken": "<an encrypted token>",
+    "data": {
+      "user": {
+        "name": "Bruce Wayne",
+        "email": "batman@justiceleague.com",
+        "permissions": [
+            "USER"
+        ]
+      }
+    }
+}
+```
+
+## Error Response
+
+**Condition** : Invalid resetToken
+
+**Code** : `400 BAD REQUEST`
+
+**Content example**
+
+```json
+"This token is invalid or expired!"
+```
+
+**Condition** : Validation failure
+
+**Code** : `422 UNPROCESSABLE ENTITY`
+
+**Content example**
+
+```json
+{
+    "errors": [
+        {
+            "value": "DarkKnight39",
+            "msg": "Password must contain at least one uppercase letter, one lowercase letter, and one symbol",
+            "param": "password",
+            "location": "body"
+        }
+    ]
+}
+```
