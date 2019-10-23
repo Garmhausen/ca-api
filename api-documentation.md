@@ -329,7 +329,7 @@ None.  This call will always succeed and always trigger removal of the auth toke
 ```json
 {
   "resetToken": "[valid resetToken]",
-  "password": "password": "[valid password in plain text, 8-24 characters, at least one number, uppercase, lowercase, and symbol]",
+  "password": "[valid password in plain text, 8-24 characters, at least one number, uppercase, lowercase, and symbol]",
   "confirmPassword": "[valid matching password in plain text]"
 }
 ```
@@ -376,6 +376,8 @@ None.  This call will always succeed and always trigger removal of the auth toke
 ```json
 "This token is invalid or expired!"
 ```
+
+Also
 
 **Condition** : Validation failure
 
