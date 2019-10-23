@@ -299,7 +299,6 @@ None.  This call will always succeed and always trigger removal of the auth toke
     "message": "Email sent!",
     "data": {
       "email": "batman@justiceleague.com",
-      "resetURL": "<url to password reset form>",
       "mailResult": "<nodemailer mail result object>"
     }
 }

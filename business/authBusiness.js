@@ -95,7 +95,6 @@ const requestPasswordReset = async (email) => {
 
   return {
     ...updatedSlimUser,
-    resetURL,
     mailResult
   };
 }
