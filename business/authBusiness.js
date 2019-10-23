@@ -1,8 +1,11 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const { promisify } = require('util');
+const { randomBytes } = require('crypto');
 
 const { makeSlimUser } = require('./userBusiness');
 const { authService, userService } = require('../service');
+const { transport, craftEmail } = require('../mail');
 
 const createToken = (userId) => {
   const token = {
@@ -60,9 +63,47 @@ const signin = async (email, password) => {
   return makeSlimUser(user);
 }
 
+const requestPasswordReset = async (email) => {
+  const user = await userService.getUserByEmail(email);
+
+  if (!user) {
+    throw new Error(`No user found for email ${email}.`);
+  }
+
+  const randomBytesPromisified = promisify(randomBytes);
+  const resetToken = (await randomBytesPromisified(20)).toString('hex');
+  const resetTokenExpiration = Date.now() + 3600000; // 1 hour expiration
+
+  const updatedUser = await userService.updateUser(user.id, { resetToken, resetTokenExpiration });
+  const updatedSlimUser = makeSlimUser(updatedUser);
+  delete updatedSlimUser.id;
+  delete updatedSlimUser.name;
+  delete updatedSlimUser.permissions;
+
+  const resetURL = `${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}`;
+
+  const mailResult = await transport.sendMail({
+    from: 'admin@admin.admin',
+    to: user.email,
+    subject: 'Password Reset Link',
+    html: craftEmail(`
+            Your password reset link is here!\n
+            \n
+            <a href="${resetURL}">Click here to reset</a>
+        `)
+  });
+
+  return {
+    ...updatedSlimUser,
+    resetURL,
+    mailResult
+  };
+}
+
 module.exports = {
   createToken,
   getUserIdFromValidToken,
   userSignUp,
-  signin
+  signin,
+  requestPasswordReset
 };

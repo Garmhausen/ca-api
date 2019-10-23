@@ -12,7 +12,7 @@ const app = express();
 
 // ------ BEGIN MIDDLEWARE ------
 const corsOptions = {
-    origin: process.env.FRONTEND_URI,
+    origin: process.env.FRONTEND_URL,
     optionsSuccessStatus: 200,
     credentials: true
 }
