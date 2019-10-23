@@ -59,7 +59,7 @@ Returns name and email of the user currently logged in.
 
 **Method** : `GET`
 
-**Auth required** : no
+**Auth required** : yes
 
 ## Success Response
 
@@ -69,8 +69,14 @@ Returns name and email of the user currently logged in.
 
 ```json
 {
-  "name": "Bruce Wayne",
-  "email": "batman@justiceleague.com"
+    "authToken": "<an encrypted token>",
+    "user": {
+        "name": "Bruce Wayne",
+        "email": "batman@justiceleague.com",
+        "permissions": [
+            "USER"
+        ]
+    }
 }
 ```
 
@@ -130,10 +136,14 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 
 ```json
 {
-    "name": "Bruce Wayne",
-    "email": "batman@justiceleague.com",
-    "permissions": ["USER"],
-    "authToken": "<an encrypted token>"
+    "authToken": "<an encrypted token>",
+    "user": {
+        "name": "Bruce Wayne",
+        "email": "batman@justiceleague.com",
+        "permissions": [
+            "USER"
+        ]
+    }
 }
 ```
 
@@ -198,10 +208,14 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 
 ```json
 {
-    "name": "Bruce Wayne",
-    "email": "batman@justiceleague.com",
-    "permissions": ["USER"],
-    "authToken": "<an encrypted token>"
+    "authToken": "<an encrypted token>",
+    "user": {
+        "name": "Bruce Wayne",
+        "email": "batman@justiceleague.com",
+        "permissions": [
+            "USER"
+        ]
+    }
 }
 ```
 
