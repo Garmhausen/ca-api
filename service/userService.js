@@ -30,10 +30,17 @@ const deleteUser = (userId) => {
   return user;
 }
 
+const getUserByResetToken = async (resetToken) => {
+  const [user] = await query.retrieveUserByResetToken(resetToken);
+
+  return user || null;
+}
+
 module.exports = {
   getUserById,
   getUserByEmail,
   getAllUsers,
   updateUser,
-  deleteUser
+  deleteUser,
+  getUserByResetToken
 };

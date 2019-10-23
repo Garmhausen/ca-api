@@ -78,38 +78,58 @@ router.post('/signout', function(req, res) {
     });
 });
 
-// Password Reset will be implemented in a future story
-
 // POST /account/requestreset
-// router.post('/requestreset', async function(req, res) {
-//     console.log('POST /account/requestReset');
-//     console.log('email:', req.body.email);
-//     let response;
+router.post('/requestreset', async function(req, res) {
+    console.log('POST /account/requestReset');
+    let response;
 
-//     try {
-//         response = await mutation.requestReset(req.body.email);
-//     } catch (error) {
-//         reponse = handleError(error);
-//         res.status(400);  // bad request
-//     }
+    try {
+        const email = req.body.email;
+        const result = await authBusiness.requestPasswordReset(email);
+        response = {
+            message: 'Email sent!',
+            data: {
+                ...result
+            }
+        }
+    } catch (error) {
+        response = handleError(error);
+        res.status(400);  // bad request
+    }
 
-//     res.json(response);
-// });
+    res.json(response);
+});
 
 // POST /account/resetpassword
-// router.post('/resetpassword', async function(req, res) {
-//     console.log('POST /account/resetpassword');
-//     let response;
+router.post('/resetpassword', validationHelper.resetPasswordValidation, async function(req, res) {
+    console.log('POST /account/resetpassword');
 
-//     try {
-//         response = await mutation.resetPassword(req.body);
-//         // TODO: make an authToken and attach
-//     } catch (error) {
-//         response = handleError(error);
-//         res.status(400);  // bad request
-//     }
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+        return res.status(422).json({ errors: validationErrors.array() });
+    }
+    
+    let response;
 
-//     res.json(response);
-// });
+    try {
+        const resetToken = req.body.resetToken;
+        const password = req.body.password;
+        const confirmPassword = req.body.confirmPassword;
+        const user = await authBusiness.resetPassword(resetToken, password, confirmPassword);
+        const authToken = authBusiness.createToken(user.id);
+        delete user.id;
+        response = {
+            authToken,
+            data: {
+                user
+            }
+        }
+    } catch (error) {
+        response = handleError(error);
+        res.status(400);  // bad request
+    }
+
+    res.json(response);
+});
 
 module.exports = router;
