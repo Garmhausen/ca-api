@@ -33,6 +33,24 @@ const accountSignUpValidation = [
     .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one symbol')
 ];
 
+const resetPasswordValidation = [
+  check('confirmPassword')
+    .custom((confirmPassword, { req }) => {
+      if (confirmPassword !== req.body.password) {
+        throw new Error('Passwords must match');
+      }
+      return true;
+    }),
+  check('password', 'Password is required')
+    .isLength({ min: 8 })
+    .withMessage('Password must be at least 8 characters')
+    .isLength({ max: 24 })
+    .withMessage('Password maximum length is 24 characters')
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/)
+    .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one symbol')
+]
+
 module.exports = {
-  accountSignUpValidation
+  accountSignUpValidation,
+  resetPasswordValidation
 };

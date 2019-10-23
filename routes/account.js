@@ -93,7 +93,7 @@ router.post('/requestreset', async function(req, res) {
             }
         }
     } catch (error) {
-        reponse = handleError(error);
+        response = handleError(error);
         res.status(400);  // bad request
     }
 
@@ -101,8 +101,14 @@ router.post('/requestreset', async function(req, res) {
 });
 
 // POST /account/resetpassword
-router.post('/resetpassword', async function(req, res) {
+router.post('/resetpassword', validationHelper.resetPasswordValidation, async function(req, res) {
     console.log('POST /account/resetpassword');
+
+    const validationErrors = validationResult(req);
+    if (!validationErrors.isEmpty()) {
+        return res.status(422).json({ errors: validationErrors.array() });
+    }
+    
     let response;
 
     try {
@@ -111,6 +117,7 @@ router.post('/resetpassword', async function(req, res) {
         const confirmPassword = req.body.confirmPassword;
         const user = await authBusiness.resetPassword(resetToken, password, confirmPassword);
         const authToken = authBusiness.createToken(user.id);
+        delete user.id;
         response = {
             authToken,
             data: {
