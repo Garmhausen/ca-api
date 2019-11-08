@@ -1,2 +1,4 @@
-export const authBusiness = require('./authBusiness');
-export const userBusiness = require('./userBusiness').default;
+module.exports = {
+  authBusiness: require('./authBusiness'),
+  userBusiness: require('./userBusiness')
+};

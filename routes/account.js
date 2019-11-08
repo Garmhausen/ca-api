@@ -1,14 +1,14 @@
-import { Router, json } from 'express';
-const router = Router();
-import { validationResult } from 'express-validator';
+const express = require('express');
+const router = express.Router();
+const { validationResult } = require('express-validator');
 
-import { authBusiness } from '../business';
-import { handleError } from '../utils';
-import { validationHelper } from '../helpers';
+const { authBusiness } = require('../business');
+const { handleError } = require('../utils');
+const { validationHelper } = require('../helpers');
 
 // all routes in this file begin with /account
 
-router.use(json());
+router.use(express.json());
 
 // POST /account/signup
 router.post('/signup', validationHelper.accountSignUpValidation, async function(req, res) {
@@ -132,4 +132,4 @@ router.post('/resetpassword', validationHelper.resetPasswordValidation, async fu
     res.json(response);
 });
 
-export default router;
+module.exports = router;

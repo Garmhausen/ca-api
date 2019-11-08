@@ -1,6 +1,6 @@
-import { createTransport } from 'nodemailer';
+const nodemailer = require('nodemailer');
 
-const transport = createTransport({
+const transport = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
     port: process.env.MAIL_PORT,
     auth: {
@@ -24,7 +24,5 @@ const craftEmail = text => `
     </div>
 `;
 
-const _transport = transport;
-export { _transport as transport };
-const _craftEmail = craftEmail;
-export { _craftEmail as craftEmail };
+exports.transport = transport;
+exports.craftEmail = craftEmail;

@@ -1,5 +1,5 @@
-import { check } from 'express-validator';
-import { query } from '../resolvers';
+const { check } = require('express-validator');
+const { query } = require('../resolvers');
 
 const accountSignUpValidation = [
   check('name', 'Name must not be empty')
@@ -50,7 +50,7 @@ const resetPasswordValidation = [
     .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one symbol')
 ]
 
-export default {
+module.exports = {
   accountSignUpValidation,
   resetPasswordValidation
 };

@@ -1,7 +1,7 @@
-import { Router } from 'express';
-const router = Router();
+const express = require('express');
+const router = express.Router();
 
-import { authBusiness, userBusiness } from '../business';
+const { authBusiness, userBusiness } = require('../business');
 
 // all routes in this file begin with /
 
@@ -41,4 +41,4 @@ router.get('/me', async function (req, res) {
   res.json(response);
 });
 
-export default router;
+module.exports = router;

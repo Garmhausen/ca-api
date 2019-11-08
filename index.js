@@ -1,11 +1,11 @@
 require('dotenv').config();
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
-import { authBusiness, userBusiness } from './business';
-import { userService } from './service';
-import routes from './routes';
+const { authBusiness, userBusiness } = require('./business');
+const { userService } = require('./service');
+const routes = require('./routes');
 
 // start app
 const app = express();

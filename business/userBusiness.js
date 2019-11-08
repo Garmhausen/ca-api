@@ -1,5 +1,5 @@
-import { userService } from '../service';
-import { hasPermission } from '../utils';
+const { userService } = require('../service');
+const { hasPermission } = require('../utils');
 
 const getUserById = async (userId, requestingUser) => {
   const isGettingSelf = userId === requestingUser.id;
@@ -68,7 +68,7 @@ const slimUserFragment = `
   }
 `;
 
-export default {
+module.exports = {
   getUserById,
   getUserByEmail,
   getAllUsers,

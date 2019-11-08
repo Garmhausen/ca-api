@@ -1,2 +1,2 @@
-export const query = require('./Query');
-export const mutation = require('./Mutation');
+exports.query = require('./Query');
+exports.mutation = require('./Mutation');

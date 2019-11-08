@@ -1,4 +1,4 @@
-import { prisma } from '../prisma';
+const { prisma } = require('../prisma');
 
 //#region User
 function retrieveUser(id) {
@@ -52,7 +52,7 @@ function retrieveClientsByUserId(id) {
 }
 //#endregion
 
-export default {
+module.exports = {
     retrieveUser,
     retrieveUsers,
     retrieveUserByEmail,

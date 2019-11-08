@@ -1,4 +1,4 @@
-import { prisma } from '../prisma';
+const { prisma } = require('../prisma');
 
 //#region User
 function deleteUser(id) {
@@ -40,7 +40,7 @@ function updateClient(id, data) {
 }
 //#endregion
 
-export default {
+module.exports = {
     deleteUser,
     signup,
     updatePermissions,
