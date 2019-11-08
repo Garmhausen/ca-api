@@ -1,4 +1,4 @@
-import { query, mutation } from '../resolvers';
+const { query, mutation } = require('../resolvers');
 
 const getClientById = (clientId) => {
   const client = query.retrieveClient(clientId);
@@ -30,7 +30,7 @@ const deleteClient = (clientId) => {
   return client;
 }
 
-export default {
+module.exports =  {
   getClientById,
   getClientsByUserId,
   getAllClients,
