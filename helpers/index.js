@@ -1,3 +1,1 @@
-module.exports = {
-  validationHelper: require('./validationHelper')
-};
+export const validationHelper = require('./validationHelper').default;

@@ -1,4 +1,2 @@
-module.exports = {
-  authService: require('./authService'),
-  userService: require('./userService')
-};
+export const authService = require('./authService').default;
+export const userService = require('./userService').default;

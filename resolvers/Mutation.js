@@ -1,4 +1,4 @@
-const { prisma } = require('../prisma');
+import { prisma } from '../prisma';
 
 function deleteUser(id) {
 
@@ -26,7 +26,7 @@ function updateUser(id, updates) {
     return prisma.updateUser({ where: { id }, data: updates });
 }
 
-module.exports = {
+export default {
     deleteUser,
     signup,
     updatePermissions,

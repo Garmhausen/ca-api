@@ -1,4 +1,4 @@
-const { mutation } = require('../resolvers');
+import { mutation } from '../resolvers';
 
 const signup = async (args) => {
   const user = await mutation.signup(args);
@@ -6,6 +6,6 @@ const signup = async (args) => {
   return user;
 }
 
-module.exports = {
+export default {
   signup
 };

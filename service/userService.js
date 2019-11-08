@@ -1,4 +1,4 @@
-const { query, mutation } = require('../resolvers');
+import { query, mutation } from '../resolvers';
 
 const getUserById = (userId) => {
   const user = query.retrieveUser(userId);
@@ -36,7 +36,7 @@ const getUserByResetToken = async (resetToken) => {
   return user || null;
 }
 
-module.exports = {
+export default {
   getUserById,
   getUserByEmail,
   getAllUsers,

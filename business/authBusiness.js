@@ -1,11 +1,11 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const { promisify } = require('util');
-const { randomBytes } = require('crypto');
+import { sign, verify } from 'jsonwebtoken';
+import { hash, compare } from 'bcryptjs';
+import { promisify } from 'util';
+import { randomBytes } from 'crypto';
 
-const { makeSlimUser } = require('./userBusiness');
-const { authService, userService } = require('../service');
-const { transport, craftEmail } = require('../mail');
+import { makeSlimUser } from './userBusiness';
+import { authService, userService } from '../service';
+import { transport, craftEmail } from '../mail';
 
 const createToken = (userId) => {
   const token = {
@@ -13,13 +13,13 @@ const createToken = (userId) => {
     expiration: Date.now() + (1000 * 60 * 60 * 24 * 14) // 14 days from now
   }
 
-  return jwt.sign(token, process.env.TOKEN_SECRET);
+  return sign(token, process.env.TOKEN_SECRET);
 };
 
 const getUserIdFromValidToken = (authToken) => {
   if (authToken) {
     try {
-      const { userId, expiration } = jwt.verify(authToken, process.env.TOKEN_SECRET);
+      const { userId, expiration } = verify(authToken, process.env.TOKEN_SECRET);
 
       if (expiration >= Date.now()) {
         return userId;
@@ -35,7 +35,7 @@ const getUserIdFromValidToken = (authToken) => {
 
 const userSignUp = async (args) => {
   args.email = args.email.toLowerCase();  // lowercase all emails going into the db
-  const password = await bcrypt.hash(args.password, 10);
+  const password = await hash(args.password, 10);
   const newUser = {
     name: args.name || '',
     email: args.email,
@@ -54,7 +54,7 @@ const signin = async (email, password) => {
     throw new Error(`No user found for email ${email}.`);
   }
   
-  const valid = await bcrypt.compare(password, user.password);
+  const valid = await compare(password, user.password);
   
   if (!valid) {
     throw new Error(`Invalid password!`);
@@ -110,7 +110,7 @@ const resetPassword = async (resetToken, newPassword, confirmPassword) => {
     throw new Error('This token is invalid or expired!');
   }
 
-  const password = await bcrypt.hash(newPassword, 10);
+  const password = await hash(newPassword, 10);
 
   const updatedUser = await userService.updateUser(user.id, {
     password,
@@ -123,7 +123,7 @@ const resetPassword = async (resetToken, newPassword, confirmPassword) => {
   return updatedSlimUser;
 };
 
-module.exports = {
+export default {
   createToken,
   getUserIdFromValidToken,
   userSignUp,

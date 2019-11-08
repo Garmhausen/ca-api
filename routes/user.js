@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { hasPermission, handleError, slimUser, verifyLoggedIn } = require('../utils');
-const { mutation } = require('../resolvers');
-const { authBusiness, userBusiness } = require('../business');
+import { Router, json } from 'express';
+const router = Router();
+import { hasPermission, handleError, slimUser, verifyLoggedIn } from '../utils';
+import { mutation } from '../resolvers';
+import { authBusiness, userBusiness } from '../business';
 
 // all routes in this file begin with /user
 
@@ -35,7 +35,7 @@ router.get('/:id', async function(req, res) {
     res.json(response);
 });
 
-router.use(express.json()); // required for parsing json body in request
+router.use(json()); // required for parsing json body in request
 
 // PATCH /user/:id
 router.patch('/:id', async function(req, res) {
@@ -108,4 +108,4 @@ router.post('/:id/permissions', async function(req, res) {
     res.json(response);
 })
 
-module.exports = router;
+export default router;

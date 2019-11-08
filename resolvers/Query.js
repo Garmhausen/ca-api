@@ -1,4 +1,4 @@
-const { prisma } = require('../prisma');
+import { prisma } from '../prisma';
 
 function retrieveUser(id) {
     
@@ -25,7 +25,7 @@ function retrieveUserByResetToken(resetToken) {
     });
 }
 
-module.exports = {
+export default {
     retrieveUser,
     retrieveUsers,
     retrieveUserByEmail,
