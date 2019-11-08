@@ -1,5 +1,6 @@
 import { prisma } from '../prisma';
 
+//#region User
 function deleteUser(id) {
 
     return prisma.deleteUser({ id })
@@ -21,14 +22,29 @@ function updatePermissions(id, permissions) {
     });
 };
 
-function updateUser(id, updates) {
+function updateUser(id, data) {
     
-    return prisma.updateUser({ where: { id }, data: updates });
+    return prisma.updateUser({ where: { id }, data });
 }
+//#endregion
+
+//#region Client
+function deleteClient(id) {
+
+    return prisma.deleteClient({ id });
+}
+
+function updateClient(id, data) {
+
+    return prisma.updateClient({ where: { id }, data})
+}
+//#endregion
 
 export default {
     deleteUser,
     signup,
     updatePermissions,
-    updateUser
+    updateUser,
+    deleteClient,
+    updateClient
 };
