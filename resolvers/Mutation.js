@@ -6,7 +6,8 @@ function deleteUser(id) {
     return prisma.deleteUser({ id })
 }
 
-async function signup(args) {
+function signup(args) {
+
     return prisma.createUser(args);
 };
 
@@ -29,6 +30,11 @@ function updateUser(id, data) {
 //#endregion
 
 //#region Client
+function createClient(args) {
+
+    return prisma.createClient(args);
+}
+
 function deleteClient(id) {
 
     return prisma.deleteClient({ id });
@@ -45,6 +51,7 @@ module.exports = {
     signup,
     updatePermissions,
     updateUser,
+    createClient,
     deleteClient,
     updateClient
 };
