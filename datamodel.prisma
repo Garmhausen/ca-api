@@ -28,5 +28,6 @@ type Client {
   city: String
   postalCode: String
   stateProvince: String
+  notes: String
   user: User! @relation(link: INLINE)
 }
