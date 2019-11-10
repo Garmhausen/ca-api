@@ -18,6 +18,19 @@ const getAllClients = () => {
   return clients;
 }
 
+const createClient = (clientData, userId) => {
+  const client = mutation.createClient({
+    ...clientData,
+    user: {
+      connect: {
+        id: userId
+      }
+    }
+  });
+
+  return client;
+}
+
 const updateClient = (clientId, updates) => {
   const client = mutation.updateClient(clientId, updates);
 
@@ -34,6 +47,7 @@ module.exports =  {
   getClientById,
   getClientsByUserId,
   getAllClients,
+  createClient,
   updateClient,
   deleteClient
 }
