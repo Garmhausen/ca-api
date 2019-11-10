@@ -166,7 +166,9 @@ export type ClientOrderByInput =
   | "postalCode_ASC"
   | "postalCode_DESC"
   | "stateProvince_ASC"
-  | "stateProvince_DESC";
+  | "stateProvince_DESC"
+  | "notes_ASC"
+  | "notes_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -345,6 +347,20 @@ export interface ClientWhereInput {
   stateProvince_not_starts_with?: Maybe<String>;
   stateProvince_ends_with?: Maybe<String>;
   stateProvince_not_ends_with?: Maybe<String>;
+  notes?: Maybe<String>;
+  notes_not?: Maybe<String>;
+  notes_in?: Maybe<String[] | String>;
+  notes_not_in?: Maybe<String[] | String>;
+  notes_lt?: Maybe<String>;
+  notes_lte?: Maybe<String>;
+  notes_gt?: Maybe<String>;
+  notes_gte?: Maybe<String>;
+  notes_contains?: Maybe<String>;
+  notes_not_contains?: Maybe<String>;
+  notes_starts_with?: Maybe<String>;
+  notes_not_starts_with?: Maybe<String>;
+  notes_ends_with?: Maybe<String>;
+  notes_not_ends_with?: Maybe<String>;
   user?: Maybe<UserWhereInput>;
   AND?: Maybe<ClientWhereInput[] | ClientWhereInput>;
   OR?: Maybe<ClientWhereInput[] | ClientWhereInput>;
@@ -454,6 +470,7 @@ export interface ClientCreateInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
+  notes?: Maybe<String>;
   user: UserCreateOneWithoutClientsInput;
 }
 
@@ -486,6 +503,7 @@ export interface ClientUpdateInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
+  notes?: Maybe<String>;
   user?: Maybe<UserUpdateOneRequiredWithoutClientsInput>;
 }
 
@@ -524,6 +542,7 @@ export interface ClientUpdateManyMutationInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
+  notes?: Maybe<String>;
 }
 
 export interface UserCreateInput {
@@ -553,6 +572,7 @@ export interface ClientCreateWithoutUserInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
+  notes?: Maybe<String>;
 }
 
 export interface UserUpdateInput {
@@ -601,6 +621,7 @@ export interface ClientUpdateWithoutUserDataInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
+  notes?: Maybe<String>;
 }
 
 export interface ClientUpsertWithWhereUniqueWithoutUserInput {
@@ -766,6 +787,20 @@ export interface ClientScalarWhereInput {
   stateProvince_not_starts_with?: Maybe<String>;
   stateProvince_ends_with?: Maybe<String>;
   stateProvince_not_ends_with?: Maybe<String>;
+  notes?: Maybe<String>;
+  notes_not?: Maybe<String>;
+  notes_in?: Maybe<String[] | String>;
+  notes_not_in?: Maybe<String[] | String>;
+  notes_lt?: Maybe<String>;
+  notes_lte?: Maybe<String>;
+  notes_gt?: Maybe<String>;
+  notes_gte?: Maybe<String>;
+  notes_contains?: Maybe<String>;
+  notes_not_contains?: Maybe<String>;
+  notes_starts_with?: Maybe<String>;
+  notes_not_starts_with?: Maybe<String>;
+  notes_ends_with?: Maybe<String>;
+  notes_not_ends_with?: Maybe<String>;
   AND?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
   OR?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
   NOT?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
@@ -786,6 +821,7 @@ export interface ClientUpdateManyDataInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
+  notes?: Maybe<String>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -836,6 +872,7 @@ export interface Client {
   city?: String;
   postalCode?: String;
   stateProvince?: String;
+  notes?: String;
 }
 
 export interface ClientPromise extends Promise<Client>, Fragmentable {
@@ -851,6 +888,7 @@ export interface ClientPromise extends Promise<Client>, Fragmentable {
   city: () => Promise<String>;
   postalCode: () => Promise<String>;
   stateProvince: () => Promise<String>;
+  notes: () => Promise<String>;
   user: <T = UserPromise>() => T;
 }
 
@@ -869,6 +907,7 @@ export interface ClientSubscription
   city: () => Promise<AsyncIterator<String>>;
   postalCode: () => Promise<AsyncIterator<String>>;
   stateProvince: () => Promise<AsyncIterator<String>>;
+  notes: () => Promise<AsyncIterator<String>>;
   user: <T = UserSubscription>() => T;
 }
 
@@ -887,6 +926,7 @@ export interface ClientNullablePromise
   city: () => Promise<String>;
   postalCode: () => Promise<String>;
   stateProvince: () => Promise<String>;
+  notes: () => Promise<String>;
   user: <T = UserPromise>() => T;
 }
 
@@ -1146,6 +1186,7 @@ export interface ClientPreviousValues {
   city?: String;
   postalCode?: String;
   stateProvince?: String;
+  notes?: String;
 }
 
 export interface ClientPreviousValuesPromise
@@ -1163,6 +1204,7 @@ export interface ClientPreviousValuesPromise
   city: () => Promise<String>;
   postalCode: () => Promise<String>;
   stateProvince: () => Promise<String>;
+  notes: () => Promise<String>;
 }
 
 export interface ClientPreviousValuesSubscription
@@ -1180,6 +1222,7 @@ export interface ClientPreviousValuesSubscription
   city: () => Promise<AsyncIterator<String>>;
   postalCode: () => Promise<AsyncIterator<String>>;
   stateProvince: () => Promise<AsyncIterator<String>>;
+  notes: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
