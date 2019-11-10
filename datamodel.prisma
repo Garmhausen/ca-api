@@ -12,4 +12,21 @@ type User {
   resetToken: String
   resetTokenExpiration: Float
   permissions: [Permission] @scalarList(strategy: RELATION)
+  clients: [Client!]!
+}
+
+type Client {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  name: String!
+  email: String
+  phone: String
+  address1: String
+  address2: String
+  address3: String
+  city: String
+  postalCode: String
+  stateProvince: String
+  user: User! @relation(link: INLINE)
 }

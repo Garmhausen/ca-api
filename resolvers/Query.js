@@ -1,5 +1,6 @@
 const { prisma } = require('../prisma');
 
+//#region User
 function retrieveUser(id) {
     
     return prisma.user({ id });
@@ -24,10 +25,39 @@ function retrieveUserByResetToken(resetToken) {
         }
     });
 }
+//#endregion
+
+//#region Client
+function retrieveClient(id) {
+
+    return prisma.client({ id });
+}
+
+function retrieveClients() {
+
+    return prisma.clients({});
+}
+
+function retrieveClientsByUserId(id) {
+
+    return prisma.clients({
+        where: {
+            user: {
+                where: {
+                    id
+                }
+            }
+        }
+    });
+}
+//#endregion
 
 module.exports = {
     retrieveUser,
     retrieveUsers,
     retrieveUserByEmail,
-    retrieveUserByResetToken
+    retrieveUserByResetToken,
+    retrieveClient,
+    retrieveClients,
+    retrieveClientsByUserId
 }
