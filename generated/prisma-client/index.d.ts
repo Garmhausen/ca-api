@@ -166,9 +166,7 @@ export type ClientOrderByInput =
   | "postalCode_ASC"
   | "postalCode_DESC"
   | "stateProvince_ASC"
-  | "stateProvince_DESC"
-  | "country_ASC"
-  | "country_DESC";
+  | "stateProvince_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -186,68 +184,171 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface ClientUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address1?: Maybe<String>;
-  address2?: Maybe<String>;
-  address3?: Maybe<String>;
-  city?: Maybe<String>;
-  postalCode?: Maybe<String>;
-  stateProvince?: Maybe<String>;
-  country?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutClientsInput>;
-}
-
 export type ClientWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface ClientUpdateManyWithoutUserInput {
-  create?: Maybe<ClientCreateWithoutUserInput[] | ClientCreateWithoutUserInput>;
-  delete?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
-  connect?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
-  set?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
-  disconnect?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
-  update?: Maybe<
-    | ClientUpdateWithWhereUniqueWithoutUserInput[]
-    | ClientUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | ClientUpsertWithWhereUniqueWithoutUserInput[]
-    | ClientUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
-  updateMany?: Maybe<
-    | ClientUpdateManyWithWhereNestedInput[]
-    | ClientUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserCreateInput {
+export interface ClientWhereInput {
   id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  resetToken?: Maybe<String>;
-  resetTokenExpiration?: Maybe<Float>;
-  permissions?: Maybe<UserCreatepermissionsInput>;
-  clients?: Maybe<ClientCreateManyWithoutUserInput>;
-}
-
-export interface UserUpdateInput {
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
   name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
   email?: Maybe<String>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetTokenExpiration?: Maybe<Float>;
-  permissions?: Maybe<UserUpdatepermissionsInput>;
-  clients?: Maybe<ClientUpdateManyWithoutUserInput>;
-}
-
-export interface UserUpdatepermissionsInput {
-  set?: Maybe<Permission[] | Permission>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  phone?: Maybe<String>;
+  phone_not?: Maybe<String>;
+  phone_in?: Maybe<String[] | String>;
+  phone_not_in?: Maybe<String[] | String>;
+  phone_lt?: Maybe<String>;
+  phone_lte?: Maybe<String>;
+  phone_gt?: Maybe<String>;
+  phone_gte?: Maybe<String>;
+  phone_contains?: Maybe<String>;
+  phone_not_contains?: Maybe<String>;
+  phone_starts_with?: Maybe<String>;
+  phone_not_starts_with?: Maybe<String>;
+  phone_ends_with?: Maybe<String>;
+  phone_not_ends_with?: Maybe<String>;
+  address1?: Maybe<String>;
+  address1_not?: Maybe<String>;
+  address1_in?: Maybe<String[] | String>;
+  address1_not_in?: Maybe<String[] | String>;
+  address1_lt?: Maybe<String>;
+  address1_lte?: Maybe<String>;
+  address1_gt?: Maybe<String>;
+  address1_gte?: Maybe<String>;
+  address1_contains?: Maybe<String>;
+  address1_not_contains?: Maybe<String>;
+  address1_starts_with?: Maybe<String>;
+  address1_not_starts_with?: Maybe<String>;
+  address1_ends_with?: Maybe<String>;
+  address1_not_ends_with?: Maybe<String>;
+  address2?: Maybe<String>;
+  address2_not?: Maybe<String>;
+  address2_in?: Maybe<String[] | String>;
+  address2_not_in?: Maybe<String[] | String>;
+  address2_lt?: Maybe<String>;
+  address2_lte?: Maybe<String>;
+  address2_gt?: Maybe<String>;
+  address2_gte?: Maybe<String>;
+  address2_contains?: Maybe<String>;
+  address2_not_contains?: Maybe<String>;
+  address2_starts_with?: Maybe<String>;
+  address2_not_starts_with?: Maybe<String>;
+  address2_ends_with?: Maybe<String>;
+  address2_not_ends_with?: Maybe<String>;
+  address3?: Maybe<String>;
+  address3_not?: Maybe<String>;
+  address3_in?: Maybe<String[] | String>;
+  address3_not_in?: Maybe<String[] | String>;
+  address3_lt?: Maybe<String>;
+  address3_lte?: Maybe<String>;
+  address3_gt?: Maybe<String>;
+  address3_gte?: Maybe<String>;
+  address3_contains?: Maybe<String>;
+  address3_not_contains?: Maybe<String>;
+  address3_starts_with?: Maybe<String>;
+  address3_not_starts_with?: Maybe<String>;
+  address3_ends_with?: Maybe<String>;
+  address3_not_ends_with?: Maybe<String>;
+  city?: Maybe<String>;
+  city_not?: Maybe<String>;
+  city_in?: Maybe<String[] | String>;
+  city_not_in?: Maybe<String[] | String>;
+  city_lt?: Maybe<String>;
+  city_lte?: Maybe<String>;
+  city_gt?: Maybe<String>;
+  city_gte?: Maybe<String>;
+  city_contains?: Maybe<String>;
+  city_not_contains?: Maybe<String>;
+  city_starts_with?: Maybe<String>;
+  city_not_starts_with?: Maybe<String>;
+  city_ends_with?: Maybe<String>;
+  city_not_ends_with?: Maybe<String>;
+  postalCode?: Maybe<String>;
+  postalCode_not?: Maybe<String>;
+  postalCode_in?: Maybe<String[] | String>;
+  postalCode_not_in?: Maybe<String[] | String>;
+  postalCode_lt?: Maybe<String>;
+  postalCode_lte?: Maybe<String>;
+  postalCode_gt?: Maybe<String>;
+  postalCode_gte?: Maybe<String>;
+  postalCode_contains?: Maybe<String>;
+  postalCode_not_contains?: Maybe<String>;
+  postalCode_starts_with?: Maybe<String>;
+  postalCode_not_starts_with?: Maybe<String>;
+  postalCode_ends_with?: Maybe<String>;
+  postalCode_not_ends_with?: Maybe<String>;
+  stateProvince?: Maybe<String>;
+  stateProvince_not?: Maybe<String>;
+  stateProvince_in?: Maybe<String[] | String>;
+  stateProvince_not_in?: Maybe<String[] | String>;
+  stateProvince_lt?: Maybe<String>;
+  stateProvince_lte?: Maybe<String>;
+  stateProvince_gt?: Maybe<String>;
+  stateProvince_gte?: Maybe<String>;
+  stateProvince_contains?: Maybe<String>;
+  stateProvince_not_contains?: Maybe<String>;
+  stateProvince_starts_with?: Maybe<String>;
+  stateProvince_not_starts_with?: Maybe<String>;
+  stateProvince_ends_with?: Maybe<String>;
+  stateProvince_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  AND?: Maybe<ClientWhereInput[] | ClientWhereInput>;
+  OR?: Maybe<ClientWhereInput[] | ClientWhereInput>;
+  NOT?: Maybe<ClientWhereInput[] | ClientWhereInput>;
 }
 
 export interface UserWhereInput {
@@ -337,16 +438,10 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface ClientSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ClientWhereInput>;
-  AND?: Maybe<ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput>;
-  OR?: Maybe<ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput>;
-  NOT?: Maybe<ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput>;
-}
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
 
 export interface ClientCreateInput {
   id?: Maybe<ID_Input>;
@@ -359,11 +454,29 @@ export interface ClientCreateInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
-  country?: Maybe<String>;
   user: UserCreateOneWithoutClientsInput;
 }
 
-export interface ClientUpdateManyDataInput {
+export interface UserCreateOneWithoutClientsInput {
+  create?: Maybe<UserCreateWithoutClientsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserCreateWithoutClientsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  resetToken?: Maybe<String>;
+  resetTokenExpiration?: Maybe<Float>;
+  permissions?: Maybe<UserCreatepermissionsInput>;
+}
+
+export interface UserCreatepermissionsInput {
+  set?: Maybe<Permission[] | Permission>;
+}
+
+export interface ClientUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   phone?: Maybe<String>;
@@ -373,12 +486,127 @@ export interface ClientUpdateManyDataInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
-  country?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutClientsInput>;
 }
 
-export interface UserCreateOneWithoutClientsInput {
+export interface UserUpdateOneRequiredWithoutClientsInput {
   create?: Maybe<UserCreateWithoutClientsInput>;
+  update?: Maybe<UserUpdateWithoutClientsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutClientsInput>;
   connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutClientsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  resetToken?: Maybe<String>;
+  resetTokenExpiration?: Maybe<Float>;
+  permissions?: Maybe<UserUpdatepermissionsInput>;
+}
+
+export interface UserUpdatepermissionsInput {
+  set?: Maybe<Permission[] | Permission>;
+}
+
+export interface UserUpsertWithoutClientsInput {
+  update: UserUpdateWithoutClientsDataInput;
+  create: UserCreateWithoutClientsInput;
+}
+
+export interface ClientUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  address1?: Maybe<String>;
+  address2?: Maybe<String>;
+  address3?: Maybe<String>;
+  city?: Maybe<String>;
+  postalCode?: Maybe<String>;
+  stateProvince?: Maybe<String>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  resetToken?: Maybe<String>;
+  resetTokenExpiration?: Maybe<Float>;
+  permissions?: Maybe<UserCreatepermissionsInput>;
+  clients?: Maybe<ClientCreateManyWithoutUserInput>;
+}
+
+export interface ClientCreateManyWithoutUserInput {
+  create?: Maybe<ClientCreateWithoutUserInput[] | ClientCreateWithoutUserInput>;
+  connect?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
+}
+
+export interface ClientCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  address1?: Maybe<String>;
+  address2?: Maybe<String>;
+  address3?: Maybe<String>;
+  city?: Maybe<String>;
+  postalCode?: Maybe<String>;
+  stateProvince?: Maybe<String>;
+}
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  resetToken?: Maybe<String>;
+  resetTokenExpiration?: Maybe<Float>;
+  permissions?: Maybe<UserUpdatepermissionsInput>;
+  clients?: Maybe<ClientUpdateManyWithoutUserInput>;
+}
+
+export interface ClientUpdateManyWithoutUserInput {
+  create?: Maybe<ClientCreateWithoutUserInput[] | ClientCreateWithoutUserInput>;
+  delete?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
+  connect?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
+  set?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
+  disconnect?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
+  update?: Maybe<
+    | ClientUpdateWithWhereUniqueWithoutUserInput[]
+    | ClientUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | ClientUpsertWithWhereUniqueWithoutUserInput[]
+    | ClientUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
+  updateMany?: Maybe<
+    | ClientUpdateManyWithWhereNestedInput[]
+    | ClientUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ClientUpdateWithWhereUniqueWithoutUserInput {
+  where: ClientWhereUniqueInput;
+  data: ClientUpdateWithoutUserDataInput;
+}
+
+export interface ClientUpdateWithoutUserDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  phone?: Maybe<String>;
+  address1?: Maybe<String>;
+  address2?: Maybe<String>;
+  address3?: Maybe<String>;
+  city?: Maybe<String>;
+  postalCode?: Maybe<String>;
+  stateProvince?: Maybe<String>;
+}
+
+export interface ClientUpsertWithWhereUniqueWithoutUserInput {
+  where: ClientWhereUniqueInput;
+  update: ClientUpdateWithoutUserDataInput;
+  create: ClientCreateWithoutUserInput;
 }
 
 export interface ClientScalarWhereInput {
@@ -538,52 +766,18 @@ export interface ClientScalarWhereInput {
   stateProvince_not_starts_with?: Maybe<String>;
   stateProvince_ends_with?: Maybe<String>;
   stateProvince_not_ends_with?: Maybe<String>;
-  country?: Maybe<String>;
-  country_not?: Maybe<String>;
-  country_in?: Maybe<String[] | String>;
-  country_not_in?: Maybe<String[] | String>;
-  country_lt?: Maybe<String>;
-  country_lte?: Maybe<String>;
-  country_gt?: Maybe<String>;
-  country_gte?: Maybe<String>;
-  country_contains?: Maybe<String>;
-  country_not_contains?: Maybe<String>;
-  country_starts_with?: Maybe<String>;
-  country_not_starts_with?: Maybe<String>;
-  country_ends_with?: Maybe<String>;
-  country_not_ends_with?: Maybe<String>;
   AND?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
   OR?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
   NOT?: Maybe<ClientScalarWhereInput[] | ClientScalarWhereInput>;
 }
 
-export interface UserCreateWithoutClientsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  resetToken?: Maybe<String>;
-  resetTokenExpiration?: Maybe<Float>;
-  permissions?: Maybe<UserCreatepermissionsInput>;
+export interface ClientUpdateManyWithWhereNestedInput {
+  where: ClientScalarWhereInput;
+  data: ClientUpdateManyDataInput;
 }
 
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface UserCreatepermissionsInput {
-  set?: Maybe<Permission[] | Permission>;
-}
-
-export interface ClientUpdateWithWhereUniqueWithoutUserInput {
-  where: ClientWhereUniqueInput;
-  data: ClientUpdateWithoutUserDataInput;
-}
-
-export interface ClientCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  name: String;
+export interface ClientUpdateManyDataInput {
+  name?: Maybe<String>;
   email?: Maybe<String>;
   phone?: Maybe<String>;
   address1?: Maybe<String>;
@@ -592,7 +786,26 @@ export interface ClientCreateWithoutUserInput {
   city?: Maybe<String>;
   postalCode?: Maybe<String>;
   stateProvince?: Maybe<String>;
-  country?: Maybe<String>;
+}
+
+export interface UserUpdateManyMutationInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  resetToken?: Maybe<String>;
+  resetTokenExpiration?: Maybe<Float>;
+  permissions?: Maybe<UserUpdatepermissionsInput>;
+}
+
+export interface ClientSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ClientWhereInput>;
+  AND?: Maybe<ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput>;
+  OR?: Maybe<ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput>;
+  NOT?: Maybe<ClientSubscriptionWhereInput[] | ClientSubscriptionWhereInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -606,307 +819,8 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutClientsInput {
-  create?: Maybe<UserCreateWithoutClientsInput>;
-  update?: Maybe<UserUpdateWithoutClientsDataInput>;
-  upsert?: Maybe<UserUpsertWithoutClientsInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface ClientUpdateManyWithWhereNestedInput {
-  where: ClientScalarWhereInput;
-  data: ClientUpdateManyDataInput;
-}
-
-export interface ClientUpdateManyMutationInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address1?: Maybe<String>;
-  address2?: Maybe<String>;
-  address3?: Maybe<String>;
-  city?: Maybe<String>;
-  postalCode?: Maybe<String>;
-  stateProvince?: Maybe<String>;
-  country?: Maybe<String>;
-}
-
-export interface UserUpsertWithoutClientsInput {
-  update: UserUpdateWithoutClientsDataInput;
-  create: UserCreateWithoutClientsInput;
-}
-
-export interface ClientCreateManyWithoutUserInput {
-  create?: Maybe<ClientCreateWithoutUserInput[] | ClientCreateWithoutUserInput>;
-  connect?: Maybe<ClientWhereUniqueInput[] | ClientWhereUniqueInput>;
-}
-
-export interface UserUpdateWithoutClientsDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetTokenExpiration?: Maybe<Float>;
-  permissions?: Maybe<UserUpdatepermissionsInput>;
-}
-
-export interface ClientUpsertWithWhereUniqueWithoutUserInput {
-  where: ClientWhereUniqueInput;
-  update: ClientUpdateWithoutUserDataInput;
-  create: ClientCreateWithoutUserInput;
-}
-
-export interface UserUpdateManyMutationInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  resetToken?: Maybe<String>;
-  resetTokenExpiration?: Maybe<Float>;
-  permissions?: Maybe<UserUpdatepermissionsInput>;
-}
-
-export interface ClientWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  phone?: Maybe<String>;
-  phone_not?: Maybe<String>;
-  phone_in?: Maybe<String[] | String>;
-  phone_not_in?: Maybe<String[] | String>;
-  phone_lt?: Maybe<String>;
-  phone_lte?: Maybe<String>;
-  phone_gt?: Maybe<String>;
-  phone_gte?: Maybe<String>;
-  phone_contains?: Maybe<String>;
-  phone_not_contains?: Maybe<String>;
-  phone_starts_with?: Maybe<String>;
-  phone_not_starts_with?: Maybe<String>;
-  phone_ends_with?: Maybe<String>;
-  phone_not_ends_with?: Maybe<String>;
-  address1?: Maybe<String>;
-  address1_not?: Maybe<String>;
-  address1_in?: Maybe<String[] | String>;
-  address1_not_in?: Maybe<String[] | String>;
-  address1_lt?: Maybe<String>;
-  address1_lte?: Maybe<String>;
-  address1_gt?: Maybe<String>;
-  address1_gte?: Maybe<String>;
-  address1_contains?: Maybe<String>;
-  address1_not_contains?: Maybe<String>;
-  address1_starts_with?: Maybe<String>;
-  address1_not_starts_with?: Maybe<String>;
-  address1_ends_with?: Maybe<String>;
-  address1_not_ends_with?: Maybe<String>;
-  address2?: Maybe<String>;
-  address2_not?: Maybe<String>;
-  address2_in?: Maybe<String[] | String>;
-  address2_not_in?: Maybe<String[] | String>;
-  address2_lt?: Maybe<String>;
-  address2_lte?: Maybe<String>;
-  address2_gt?: Maybe<String>;
-  address2_gte?: Maybe<String>;
-  address2_contains?: Maybe<String>;
-  address2_not_contains?: Maybe<String>;
-  address2_starts_with?: Maybe<String>;
-  address2_not_starts_with?: Maybe<String>;
-  address2_ends_with?: Maybe<String>;
-  address2_not_ends_with?: Maybe<String>;
-  address3?: Maybe<String>;
-  address3_not?: Maybe<String>;
-  address3_in?: Maybe<String[] | String>;
-  address3_not_in?: Maybe<String[] | String>;
-  address3_lt?: Maybe<String>;
-  address3_lte?: Maybe<String>;
-  address3_gt?: Maybe<String>;
-  address3_gte?: Maybe<String>;
-  address3_contains?: Maybe<String>;
-  address3_not_contains?: Maybe<String>;
-  address3_starts_with?: Maybe<String>;
-  address3_not_starts_with?: Maybe<String>;
-  address3_ends_with?: Maybe<String>;
-  address3_not_ends_with?: Maybe<String>;
-  city?: Maybe<String>;
-  city_not?: Maybe<String>;
-  city_in?: Maybe<String[] | String>;
-  city_not_in?: Maybe<String[] | String>;
-  city_lt?: Maybe<String>;
-  city_lte?: Maybe<String>;
-  city_gt?: Maybe<String>;
-  city_gte?: Maybe<String>;
-  city_contains?: Maybe<String>;
-  city_not_contains?: Maybe<String>;
-  city_starts_with?: Maybe<String>;
-  city_not_starts_with?: Maybe<String>;
-  city_ends_with?: Maybe<String>;
-  city_not_ends_with?: Maybe<String>;
-  postalCode?: Maybe<String>;
-  postalCode_not?: Maybe<String>;
-  postalCode_in?: Maybe<String[] | String>;
-  postalCode_not_in?: Maybe<String[] | String>;
-  postalCode_lt?: Maybe<String>;
-  postalCode_lte?: Maybe<String>;
-  postalCode_gt?: Maybe<String>;
-  postalCode_gte?: Maybe<String>;
-  postalCode_contains?: Maybe<String>;
-  postalCode_not_contains?: Maybe<String>;
-  postalCode_starts_with?: Maybe<String>;
-  postalCode_not_starts_with?: Maybe<String>;
-  postalCode_ends_with?: Maybe<String>;
-  postalCode_not_ends_with?: Maybe<String>;
-  stateProvince?: Maybe<String>;
-  stateProvince_not?: Maybe<String>;
-  stateProvince_in?: Maybe<String[] | String>;
-  stateProvince_not_in?: Maybe<String[] | String>;
-  stateProvince_lt?: Maybe<String>;
-  stateProvince_lte?: Maybe<String>;
-  stateProvince_gt?: Maybe<String>;
-  stateProvince_gte?: Maybe<String>;
-  stateProvince_contains?: Maybe<String>;
-  stateProvince_not_contains?: Maybe<String>;
-  stateProvince_starts_with?: Maybe<String>;
-  stateProvince_not_starts_with?: Maybe<String>;
-  stateProvince_ends_with?: Maybe<String>;
-  stateProvince_not_ends_with?: Maybe<String>;
-  country?: Maybe<String>;
-  country_not?: Maybe<String>;
-  country_in?: Maybe<String[] | String>;
-  country_not_in?: Maybe<String[] | String>;
-  country_lt?: Maybe<String>;
-  country_lte?: Maybe<String>;
-  country_gt?: Maybe<String>;
-  country_gte?: Maybe<String>;
-  country_contains?: Maybe<String>;
-  country_not_contains?: Maybe<String>;
-  country_starts_with?: Maybe<String>;
-  country_not_starts_with?: Maybe<String>;
-  country_ends_with?: Maybe<String>;
-  country_not_ends_with?: Maybe<String>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<ClientWhereInput[] | ClientWhereInput>;
-  OR?: Maybe<ClientWhereInput[] | ClientWhereInput>;
-  NOT?: Maybe<ClientWhereInput[] | ClientWhereInput>;
-}
-
-export interface ClientUpdateWithoutUserDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  phone?: Maybe<String>;
-  address1?: Maybe<String>;
-  address2?: Maybe<String>;
-  address3?: Maybe<String>;
-  city?: Maybe<String>;
-  postalCode?: Maybe<String>;
-  stateProvince?: Maybe<String>;
-  country?: Maybe<String>;
-}
-
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-  resetToken?: String;
-  resetTokenExpiration?: Float;
-  permissions: Permission[];
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  resetToken: () => Promise<String>;
-  resetTokenExpiration: () => Promise<Float>;
-  permissions: () => Promise<Permission[]>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  resetToken: () => Promise<AsyncIterator<String>>;
-  resetTokenExpiration: () => Promise<AsyncIterator<Float>>;
-  permissions: () => Promise<AsyncIterator<Permission[]>>;
-}
-
-export interface AggregateClient {
-  count: Int;
-}
-
-export interface AggregateClientPromise
-  extends Promise<AggregateClient>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateClientSubscription
-  extends Promise<AsyncIterator<AggregateClient>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Client {
@@ -922,7 +836,6 @@ export interface Client {
   city?: String;
   postalCode?: String;
   stateProvince?: String;
-  country?: String;
 }
 
 export interface ClientPromise extends Promise<Client>, Fragmentable {
@@ -938,7 +851,6 @@ export interface ClientPromise extends Promise<Client>, Fragmentable {
   city: () => Promise<String>;
   postalCode: () => Promise<String>;
   stateProvince: () => Promise<String>;
-  country: () => Promise<String>;
   user: <T = UserPromise>() => T;
 }
 
@@ -957,7 +869,6 @@ export interface ClientSubscription
   city: () => Promise<AsyncIterator<String>>;
   postalCode: () => Promise<AsyncIterator<String>>;
   stateProvince: () => Promise<AsyncIterator<String>>;
-  country: () => Promise<AsyncIterator<String>>;
   user: <T = UserSubscription>() => T;
 }
 
@@ -976,151 +887,7 @@ export interface ClientNullablePromise
   city: () => Promise<String>;
   postalCode: () => Promise<String>;
   stateProvince: () => Promise<String>;
-  country: () => Promise<String>;
   user: <T = UserPromise>() => T;
-}
-
-export interface ClientEdge {
-  node: Client;
-  cursor: String;
-}
-
-export interface ClientEdgePromise extends Promise<ClientEdge>, Fragmentable {
-  node: <T = ClientPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ClientEdgeSubscription
-  extends Promise<AsyncIterator<ClientEdge>>,
-    Fragmentable {
-  node: <T = ClientSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface ClientSubscriptionPayload {
-  mutation: MutationType;
-  node: Client;
-  updatedFields: String[];
-  previousValues: ClientPreviousValues;
-}
-
-export interface ClientSubscriptionPayloadPromise
-  extends Promise<ClientSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ClientPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ClientPreviousValuesPromise>() => T;
-}
-
-export interface ClientSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ClientSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ClientSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ClientPreviousValuesSubscription>() => T;
-}
-
-export interface ClientConnection {
-  pageInfo: PageInfo;
-  edges: ClientEdge[];
-}
-
-export interface ClientConnectionPromise
-  extends Promise<ClientConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ClientEdge>>() => T;
-  aggregate: <T = AggregateClientPromise>() => T;
-}
-
-export interface ClientConnectionSubscription
-  extends Promise<AsyncIterator<ClientConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ClientEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateClientSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
-    Fragmentable {
-  count: () => Promise<Long>;
-}
-
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface User {
@@ -1194,56 +961,81 @@ export interface UserNullablePromise
   }) => T;
 }
 
-export interface ClientPreviousValues {
-  id: ID_Output;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-  name: String;
-  email?: String;
-  phone?: String;
-  address1?: String;
-  address2?: String;
-  address3?: String;
-  city?: String;
-  postalCode?: String;
-  stateProvince?: String;
-  country?: String;
+export interface ClientConnection {
+  pageInfo: PageInfo;
+  edges: ClientEdge[];
 }
 
-export interface ClientPreviousValuesPromise
-  extends Promise<ClientPreviousValues>,
+export interface ClientConnectionPromise
+  extends Promise<ClientConnection>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  phone: () => Promise<String>;
-  address1: () => Promise<String>;
-  address2: () => Promise<String>;
-  address3: () => Promise<String>;
-  city: () => Promise<String>;
-  postalCode: () => Promise<String>;
-  stateProvince: () => Promise<String>;
-  country: () => Promise<String>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ClientEdge>>() => T;
+  aggregate: <T = AggregateClientPromise>() => T;
 }
 
-export interface ClientPreviousValuesSubscription
-  extends Promise<AsyncIterator<ClientPreviousValues>>,
+export interface ClientConnectionSubscription
+  extends Promise<AsyncIterator<ClientConnection>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  phone: () => Promise<AsyncIterator<String>>;
-  address1: () => Promise<AsyncIterator<String>>;
-  address2: () => Promise<AsyncIterator<String>>;
-  address3: () => Promise<AsyncIterator<String>>;
-  city: () => Promise<AsyncIterator<String>>;
-  postalCode: () => Promise<AsyncIterator<String>>;
-  stateProvince: () => Promise<AsyncIterator<String>>;
-  country: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ClientEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateClientSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ClientEdge {
+  node: Client;
+  cursor: String;
+}
+
+export interface ClientEdgePromise extends Promise<ClientEdge>, Fragmentable {
+  node: <T = ClientPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ClientEdgeSubscription
+  extends Promise<AsyncIterator<ClientEdge>>,
+    Fragmentable {
+  node: <T = ClientSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateClient {
+  count: Int;
+}
+
+export interface AggregateClientPromise
+  extends Promise<AggregateClient>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateClientSubscription
+  extends Promise<AsyncIterator<AggregateClient>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserConnection {
@@ -1284,28 +1076,176 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-/*
-The `Boolean` scalar type represents `true` or `false`.
-*/
-export type Boolean = boolean;
+export interface AggregateUser {
+  count: Int;
+}
 
-/*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
-*/
-export type Float = number;
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
 
-export type Long = string;
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface ClientSubscriptionPayload {
+  mutation: MutationType;
+  node: Client;
+  updatedFields: String[];
+  previousValues: ClientPreviousValues;
+}
+
+export interface ClientSubscriptionPayloadPromise
+  extends Promise<ClientSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ClientPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ClientPreviousValuesPromise>() => T;
+}
+
+export interface ClientSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ClientSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ClientSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ClientPreviousValuesSubscription>() => T;
+}
+
+export interface ClientPreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  name: String;
+  email?: String;
+  phone?: String;
+  address1?: String;
+  address2?: String;
+  address3?: String;
+  city?: String;
+  postalCode?: String;
+  stateProvince?: String;
+}
+
+export interface ClientPreviousValuesPromise
+  extends Promise<ClientPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  phone: () => Promise<String>;
+  address1: () => Promise<String>;
+  address2: () => Promise<String>;
+  address3: () => Promise<String>;
+  city: () => Promise<String>;
+  postalCode: () => Promise<String>;
+  stateProvince: () => Promise<String>;
+}
+
+export interface ClientPreviousValuesSubscription
+  extends Promise<AsyncIterator<ClientPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<String>>;
+  address1: () => Promise<AsyncIterator<String>>;
+  address2: () => Promise<AsyncIterator<String>>;
+  address3: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
+  postalCode: () => Promise<AsyncIterator<String>>;
+  stateProvince: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface UserPreviousValues {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+  resetToken?: String;
+  resetTokenExpiration?: Float;
+  permissions: Permission[];
+}
+
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  resetToken: () => Promise<String>;
+  resetTokenExpiration: () => Promise<Float>;
+  permissions: () => Promise<Permission[]>;
+}
+
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  resetToken: () => Promise<AsyncIterator<String>>;
+  resetTokenExpiration: () => Promise<AsyncIterator<Float>>;
+  permissions: () => Promise<AsyncIterator<Permission[]>>;
+}
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -1318,9 +1258,26 @@ DateTime scalar output type, which is always a string
 export type DateTimeOutput = string;
 
 /*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point).
+*/
+export type Float = number;
+
+/*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
 export type Int = number;
+
+/*
+The `Boolean` scalar type represents `true` or `false`.
+*/
+export type Boolean = boolean;
+
+export type Long = string;
 
 /**
  * Model Metadata

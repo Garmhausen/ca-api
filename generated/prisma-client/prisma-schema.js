@@ -28,7 +28,6 @@ type Client {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
   user: User!
 }
 
@@ -49,7 +48,6 @@ input ClientCreateInput {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
   user: UserCreateOneWithoutClientsInput!
 }
 
@@ -69,7 +67,6 @@ input ClientCreateWithoutUserInput {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
 }
 
 type ClientEdge {
@@ -102,8 +99,6 @@ enum ClientOrderByInput {
   postalCode_DESC
   stateProvince_ASC
   stateProvince_DESC
-  country_ASC
-  country_DESC
 }
 
 type ClientPreviousValues {
@@ -119,7 +114,6 @@ type ClientPreviousValues {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
 }
 
 input ClientScalarWhereInput {
@@ -279,20 +273,6 @@ input ClientScalarWhereInput {
   stateProvince_not_starts_with: String
   stateProvince_ends_with: String
   stateProvince_not_ends_with: String
-  country: String
-  country_not: String
-  country_in: [String!]
-  country_not_in: [String!]
-  country_lt: String
-  country_lte: String
-  country_gt: String
-  country_gte: String
-  country_contains: String
-  country_not_contains: String
-  country_starts_with: String
-  country_not_starts_with: String
-  country_ends_with: String
-  country_not_ends_with: String
   AND: [ClientScalarWhereInput!]
   OR: [ClientScalarWhereInput!]
   NOT: [ClientScalarWhereInput!]
@@ -326,7 +306,6 @@ input ClientUpdateInput {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
   user: UserUpdateOneRequiredWithoutClientsInput
 }
 
@@ -340,7 +319,6 @@ input ClientUpdateManyDataInput {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
 }
 
 input ClientUpdateManyMutationInput {
@@ -353,7 +331,6 @@ input ClientUpdateManyMutationInput {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
 }
 
 input ClientUpdateManyWithoutUserInput {
@@ -383,7 +360,6 @@ input ClientUpdateWithoutUserDataInput {
   city: String
   postalCode: String
   stateProvince: String
-  country: String
 }
 
 input ClientUpdateWithWhereUniqueWithoutUserInput {
@@ -554,20 +530,6 @@ input ClientWhereInput {
   stateProvince_not_starts_with: String
   stateProvince_ends_with: String
   stateProvince_not_ends_with: String
-  country: String
-  country_not: String
-  country_in: [String!]
-  country_not_in: [String!]
-  country_lt: String
-  country_lte: String
-  country_gt: String
-  country_gte: String
-  country_contains: String
-  country_not_contains: String
-  country_starts_with: String
-  country_not_starts_with: String
-  country_ends_with: String
-  country_not_ends_with: String
   user: UserWhereInput
   AND: [ClientWhereInput!]
   OR: [ClientWhereInput!]
