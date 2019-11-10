@@ -33,6 +33,12 @@ const accountSignUpValidation = [
     .withMessage('Password must contain at least one uppercase letter, one lowercase letter, and one symbol')
 ];
 
+const createClientValidation = [
+  check('name', 'Name must not be empty')
+    .isString()
+    .trim()
+]
+
 const resetPasswordValidation = [
   check('confirmPassword')
     .custom((confirmPassword, { req }) => {
@@ -52,5 +58,6 @@ const resetPasswordValidation = [
 
 module.exports = {
   accountSignUpValidation,
+  createClientValidation,
   resetPasswordValidation
 };

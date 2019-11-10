@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { hasPermission, handleError, verifyLoggedIn } = require('../utils');
+const { validationResult } = require('express-validator');
+
+const { handleError, verifyLoggedIn } = require('../utils');
 const { authBusiness, clientBusiness } = require('../business');
+const { validationHelper } = require('../helpers');
 
 // all routes in this file begin with /client
 
@@ -11,8 +14,14 @@ router.use((req, res, next) => verifyLoggedIn(req, res, next));
 router.use(express.json()); // required for parsing json body in request
 
 // POST /client
-router.post('/', async function(req, res) {
+router.post('/', validationHelper.createClientValidation, async function(req, res) {
   console.log('POST /client');
+
+  const validationErrors = validationResult(req);
+  if (!validationErrors.isEmpty()) {
+    return res.status(422).json({ errors: validationErrors.array() });
+  }
+
   let response;
 
   try {
