@@ -69,7 +69,10 @@ Returns name and email of the user currently logged in.
 
 ```json
 {
-    "authToken": "<an encrypted token>",
+    "authToken": {
+      "access_token": "<an encrypted token>",
+      "expires_in": "3600000"
+    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -138,7 +141,10 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 
 ```json
 {
-    "authToken": "<an encrypted token>",
+    "authToken": {
+      "access_token": "<an encrypted token>",
+      "expires_in": "3600000"
+    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -212,7 +218,10 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 
 ```json
 {
-    "authToken": "<an encrypted token>",
+    "authToken": {
+      "access_token": "<an encrypted token>",
+      "expires_in": "3600000"
+    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -351,7 +360,10 @@ None.  This call will always succeed and always trigger removal of the auth toke
 
 ```json
 {
-    "authToken": "<an encrypted token>",
+    "authToken": {
+      "access_token": "<an encrypted token>",
+      "expires_in": "3600000"
+    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -445,7 +457,10 @@ The newly created client will be associated with the user via the authToken prov
 
 ```json
 {
-    "authToken": "<an encrypted token>",
+    "authToken": {
+      "access_token": "<an encrypted token>",
+      "expires_in": "3600000"
+    },
     "data": {
       "client": {
         "city": "Gotham",

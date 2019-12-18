@@ -8,23 +8,30 @@ const { authService, userService } = require('../service');
 const { transport, craftEmail } = require('../mail');
 
 const createToken = (userId) => {
-  const token = {
+  const expiresIn = 1000 * 60 * 60 // 1 hour from now
+  const accessToken = {
     userId,
-    expiration: Date.now() + (1000 * 60 * 60 * 24 * 14) // 14 days from now
+    expiration: Date.now() + expiresIn
   }
 
-  return jwt.sign(token, process.env.TOKEN_SECRET);
+  const token = {
+    access_token: jwt.sign(accessToken, process.env.TOKEN_SECRET),
+    expires_in: expiresIn
+  }
+
+  return token;
 };
 
-const getUserIdFromValidToken = (authToken) => {
-  if (authToken) {
+const getUserIdFromValidToken = (accessToken) => {
+  if (accessToken) {
     try {
-      const { userId, expiration } = jwt.verify(authToken, process.env.TOKEN_SECRET);
+      const { userId, expiration } = jwt.verify(accessToken, process.env.TOKEN_SECRET);
 
-      if (expiration >= Date.now()) {
-        return userId;
+      if (expiration < Date.now()) {
+        throw new Error('Token has expired');
       }
-      
+
+      return userId;
     } catch (error) {
       console.log('error', error);  // TODO: better error handling
     };
