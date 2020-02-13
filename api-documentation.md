@@ -24,7 +24,10 @@ This call is designed to test the service, make sure it's up and responding.
 
 <br>
 
-**URL** : `/heartbeat`
+<details>
+<summary>
+GET /heartbeat
+</summary>
 
 **Method** : `GET`
 
@@ -46,6 +49,7 @@ This call is designed to test the service, make sure it's up and responding.
 ## Error Response
 
 **Condition** : If the server is down or unresponsive, then the call will time out.
+</details>
 
 <br><br><br>
 
@@ -55,7 +59,10 @@ Returns name and email of the user currently logged in.
 
 <br>
 
-**URL** : `/me`
+<details>
+<summary>
+GET /me
+</summary>
 
 **Method** : `GET`
 
@@ -96,16 +103,19 @@ Returns name and email of the user currently logged in.
 ```json
 "Not logged in"
 ```
+</details>
 
 <br><br><br>
 
 # Account
 
-This is where a user can sign in, sign up, or log out.  *Password reset requests and implementation is on the way soon.*
+This is where a user can sign in, sign up, or log out.
 
 <br>
-
-**URL** : `/account/signup`
+<details>
+<summary>
+POST /account/signup
+</summary>
 
 **Method** : `POST`
 
@@ -183,10 +193,14 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
     ]
 }
 ```
+</details>
 
-<br><br><br>
+<br>
 
-**URL** : `/account/signin`
+<details>
+<summary>
+POST /account/signin
+</summary>
 
 **Method** : `POST`
 
@@ -244,10 +258,14 @@ This is where a user can sign in, sign up, or log out.  *Password reset requests
 ```json
 "Invalid username or password!"
 ```
+</details>
 
-<br><br><br>
+<br>
 
-**URL** : `/account/signout`
+<details>
+<summary>
+POST /account/signout
+</summary>
 
 **Method** : `POST`
 
@@ -272,10 +290,14 @@ none
 ## Error Response
 
 None.  This call will always succeed and always trigger removal of the auth token from the headers if it exists.
+</details>
 
-<br><br><br>
+<br>
 
-**URL** : `/account/requestreset`
+<details>
+<summary>
+POST /account/requestreset
+</summary>
 
 **Method** : `POST`
 
@@ -323,10 +345,14 @@ None.  This call will always succeed and always trigger removal of the auth toke
 ```json
 "No user found for email <email>!"
 ```
+</details>
 
-<br><br><br>
+<br>
 
-**URL** : `/account/resetpassword`
+<details>
+<summary>
+POST /account/resetpassword
+</summary>
 
 **Method** : `POST`
 
@@ -408,6 +434,7 @@ Also
     ]
 }
 ```
+</details>
 
 <br><br><br>
 
@@ -418,7 +445,10 @@ The newly created client will be associated with the user via the authToken prov
 
 <br>
 
-**URL** : `/client`
+<details>
+<summary>
+GET /client
+</summary>
 
 **Method** : `GET`
 
@@ -500,3 +530,4 @@ The newly created client will be associated with the user via the authToken prov
     ]
 }
 ```
+</details>
