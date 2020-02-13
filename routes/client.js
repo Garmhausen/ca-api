@@ -41,4 +41,26 @@ router.post('/', validationHelper.createClientValidation, async function(req, re
   res.json(response);
 })
 
+// DELETE /client/:id
+router.delete('/:id', async function(req, res) {
+  console.log(`DELETE /client/${req.params.id}`);
+  let response;
+
+  try {
+    const client = await clientBusiness.deleteClient(req.params.id, req.userId);
+
+    response = {
+      authToken: authBusiness.createToken(req.userId),
+      data: {
+        client
+      }
+    }
+  } catch (error) {
+    response = handleError(error);
+    res.status(400); // bad request
+  }
+
+  res.json(response);
+});
+
 module.exports = router;
