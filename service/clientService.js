@@ -43,11 +43,18 @@ const deleteClient = (clientId) => {
   return client;
 }
 
+const verifyClientOwnership = async (clientId, userId) => {
+  const client = await query.retrieveClientByClientIdAndUserId(clientId, userId);
+
+  return client.length > 0;
+}
+
 module.exports =  {
   getClientById,
   getClientsByUserId,
   getAllClients,
   createClient,
   updateClient,
-  deleteClient
+  deleteClient,
+  verifyClientOwnership
 }
