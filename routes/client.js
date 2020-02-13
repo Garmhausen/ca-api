@@ -26,7 +26,7 @@ router.post('/', validationHelper.createClientValidation, async function(req, re
 
   try {
     const client = await clientBusiness.createClient(req.body, req.userId);
-
+    res.status(201);  // created
     response = {
       authToken: authBusiness.createToken(req.userId),
       data: {
