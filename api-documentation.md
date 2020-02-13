@@ -447,10 +447,10 @@ The newly created client will be associated with the user via the authToken prov
 
 <details>
 <summary>
-GET /client
+POST /client
 </summary>
 
-**Method** : `GET`
+**Method** : `POST`
 
 **Auth required** : yes
 
