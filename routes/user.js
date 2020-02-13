@@ -39,7 +39,7 @@ router.use(express.json()); // required for parsing json body in request
 
 // PATCH /user/:id
 router.patch('/:id', async function(req, res) {
-    console.log('POST /user');
+    console.log('PATCH /user');
     const updates = { ...req.body };
     let response;
 
@@ -93,6 +93,7 @@ router.delete('/:id', async function(req, res) {
 });
 
 // POST /user/:id/permissions
+//TODO: fix all of this, wtf
 router.post('/:id/permissions', async function(req, res) {
     console.log(`POST /user/${req.params.id}/permissions`);
     let response;
