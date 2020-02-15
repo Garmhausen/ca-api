@@ -7,11 +7,11 @@ const createClient = (clientData, userId) => {
   return client;
 }
 
-const deleteClient = async (clientId, requestingUserId) => {
-  const ownsClient = await clientService.verifyClientOwnership(clientId, requestingUserId);
+const deleteClient = async (clientId, requestingUser) => {
+  const ownsClient = await clientService.verifyClientOwnership(clientId, requestingUser.id);
 
   if (!ownsClient) {
-    hasPermission(requestingUserId, ['ADMIN']);
+    hasPermission(requestingUser, ['ADMIN']);
   }
 
   const client = clientService.deleteClient(clientId);

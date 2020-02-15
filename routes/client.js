@@ -47,7 +47,7 @@ router.delete('/:id', async function(req, res) {
   let response;
 
   try {
-    const client = await clientBusiness.deleteClient(req.params.id, req.userId);
+    const client = await clientBusiness.deleteClient(req.params.id, req.user);
 
     response = {
       authToken: authBusiness.createToken(req.userId),
