@@ -93,8 +93,11 @@ router.post('/requestreset', async function(req, res) {
             }
         }
     } catch (error) {
-        response = handleError(error);
-        res.status(400);  // bad request
+        // if the email isn't found or if there is an error with the request,
+        // then swallow it at this level.  there should still be a server-side error
+        // logged at a lower level.
+        handleError(error);
+        res.status(200);  // OK
     }
 
     res.json(response);
