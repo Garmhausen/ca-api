@@ -56,7 +56,8 @@ router.delete('/:id', async function(req, res) {
       }
     }
   } catch (error) {
-    response = handleError(error);
+    handleError(error);
+    response = "Unable to delete client.";
     res.status(400); // bad request
   }
 
