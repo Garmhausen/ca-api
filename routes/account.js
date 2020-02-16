@@ -81,23 +81,19 @@ router.post('/signout', function(req, res) {
 // POST /account/requestreset
 router.post('/requestreset', async function(req, res) {
     console.log('POST /account/requestReset');
-    let response;
+    const response = {
+        message: 'Email sent!'
+    };
 
     try {
         const email = req.body.email;
         const result = await authBusiness.requestPasswordReset(email);
-        response = {
-            message: 'Email sent!',
-            data: {
-                ...result
-            }
-        }
+        console.log('emailed password reset request', result);  // TODO: replace with real logging later
     } catch (error) {
         // if the email isn't found or if there is an error with the request,
         // then swallow it at this level.  there should still be a server-side error
         // logged at a lower level.
         handleError(error);
-        res.status(200);  // OK
     }
 
     res.json(response);
