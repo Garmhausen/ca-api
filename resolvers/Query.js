@@ -50,6 +50,18 @@ function retrieveClientsByUserId(id) {
         }
     });
 }
+
+function retrieveClientByClientIdAndUserId(clientId, userId) {
+
+    return prisma.clients({
+        where: {
+            id: clientId,
+            user: {
+                id: userId
+            }
+        }
+    });
+}
 //#endregion
 
 module.exports = {
@@ -59,5 +71,6 @@ module.exports = {
     retrieveUserByResetToken,
     retrieveClient,
     retrieveClients,
-    retrieveClientsByUserId
+    retrieveClientsByUserId,
+    retrieveClientByClientIdAndUserId,
 }
