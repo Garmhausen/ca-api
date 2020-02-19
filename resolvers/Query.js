@@ -1,5 +1,12 @@
 const { prisma } = require('../prisma');
 
+//#region Session
+function retrieveSession(sessionId) {
+
+    return prisma.session({ id: sessionId });
+}
+//#endregion
+
 //#region User
 function retrieveUser(id) {
     
@@ -65,6 +72,7 @@ function retrieveClientByClientIdAndUserId(clientId, userId) {
 //#endregion
 
 module.exports = {
+    retrieveSession,
     retrieveUser,
     retrieveUsers,
     retrieveUserByEmail,

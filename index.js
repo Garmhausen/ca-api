@@ -7,35 +7,34 @@ const { authBusiness, userBusiness } = require('./business');
 const { userService } = require('./service');
 const routes = require('./routes');
 
-// start app
 const app = express();
 
-// ------ BEGIN MIDDLEWARE ------
 const corsOptions = {
     origin: process.env.FRONTEND_URL,
     optionsSuccessStatus: 200,
     credentials: true
 }
+
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
-// add userId and user to requests if logged in
 app.use(async (req, res, next) => {
-    const { access_token } = req.cookies;
+    const { token } = req.cookies;
     
-    if (access_token) {
-        const userId = authBusiness.getUserIdFromValidToken(access_token);
-        req.userId = userId;
-        const user = userId ? await userService.getUserById(userId) : null;
+    if (token) {
+        const user = await authBusiness.getUserFromValidSession(token);
+
         if (user) {
+            req.userId = user.id;
             req.user = userBusiness.makeSlimUser(user);
+        } else {
+            res.clearCookie('token');
         }
     }
 
     return next();
 });
-// ------ END MIDDLEWARE ------
 
 app.use(routes);
 

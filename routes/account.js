@@ -6,6 +6,8 @@ const { authBusiness } = require('../business');
 const { handleError } = require('../utils');
 const { validationHelper } = require('../helpers');
 
+const sessionDuration = process.env.SESSION_DURATION;
+
 // all routes in this file begin with /account
 
 router.use(express.json());
@@ -49,11 +51,12 @@ router.post('/signin', async function(req, res) {
     let response;
 
     try {
-        let user = await authBusiness.signin(email, password);
-        const authToken = authBusiness.createToken(user.id);
+        const user = await authBusiness.signin(email, password);
+        console.log('user found', user);
+        const token = await authBusiness.startSession(user.id);
+        res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
         delete user.id;
         response = {
-            authToken,
             data: {
                 user
             }
@@ -72,7 +75,7 @@ router.post('/signin', async function(req, res) {
 router.post('/signout', function(req, res) {
     console.log('POST /account/signout');
 
-    res.clearCookie('authToken');
+    res.clearCookie('token');
     res.json({
         message: 'Goodbye!'
     });

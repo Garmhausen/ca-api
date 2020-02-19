@@ -7,31 +7,65 @@ const { makeSlimUser } = require('./userBusiness');
 const { authService, userService } = require('../service');
 const { transport, craftEmail } = require('../mail');
 
-const createToken = (userId) => {
-  const expiresIn = 1000 * 60 * 60 // 1 hour from now
-  const accessToken = {
-    userId,
-    expiration: Date.now() + expiresIn
-  }
+const sessionDuration = process.env.SESSION_DURATION;
 
-  const token = {
-    access_token: jwt.sign(accessToken, process.env.TOKEN_SECRET),
-    expires_in: expiresIn
-  }
+const startSession = async (userId) => {
+  console.log('attempting to start session...');
+  const newSession = await authService.createSession({
+    active: true,
+    expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+  }, userId);
+  console.log('newSession', newSession);
+  const token = jwt.sign(newSession.id, process.env.TOKEN_SECRET);
 
   return token;
 };
 
-const getUserIdFromValidToken = (accessToken) => {
-  if (accessToken) {
-    try {
-      const { userId, expiration } = jwt.verify(accessToken, process.env.TOKEN_SECRET);
+const refreshSession = async (token) => {
+  let success = false;
 
-      if (expiration < Date.now()) {
-        throw new Error('Token has expired');
+  if (token) {
+    const sessionId = jwt.verify(token, process.env.TOKEN_SECRET);
+    const { active, expireOn } = await authService.getSession(sessionId);
+
+    if (active && Date.parse(expireOn) > Date.now()) {
+      authService.updateSession(sessionId, {
+        expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+      });
+      success = true;
+    } else {
+      authService.endSession(sessionId);
+    }
+  }
+
+  return success;
+};
+
+const endSession = (token) => {
+  if (token) {
+    const sessionId = jwt.verify(token, process.env.TOKEN_SECRET);
+    authService.updateSession(sessionId, {
+      active: false
+    });
+  }
+};
+
+const getUserFromValidSession = async (sessionToken) => {
+  if (sessionToken) {
+    try {
+      const sessionId = jwt.verify(sessionToken, process.env.TOKEN_SECRET);
+      const { active, expireOn, user } = await authService.getSession(sessionId);
+
+      if (!active || expireOn < Date.now()) {
+        if (active) {
+          endSession(sessionToken);
+        }
+        throw new Error('Session has expired');
       }
 
-      return userId;
+      refreshSession(sessionToken);
+
+      return user;
     } catch (error) {
       console.log('error', error);  // TODO: better error handling
     };
@@ -131,8 +165,10 @@ const resetPassword = async (resetToken, newPassword, confirmPassword) => {
 };
 
 module.exports = {
-  createToken,
-  getUserIdFromValidToken,
+  startSession,
+  refreshSession,
+  endSession,
+  getUserFromValidSession,
   userSignUp,
   signin,
   requestPasswordReset,
