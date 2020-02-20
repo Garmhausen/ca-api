@@ -29,6 +29,7 @@ router.post('/signup', validationHelper.accountSignUpValidation, async function(
         let user = await authBusiness.userSignUp(args);
         const token = await authBusiness.startSession(user.id);
         res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
+        res.cookie('isAuthenticated', true, { maxAge: sessionDuration });
         delete user.id;
         res.status(201);  // Created
         response = {
@@ -57,6 +58,7 @@ router.post('/signin', async function(req, res) {
         if (!req.userId) {
             const token = await authBusiness.startSession(user.id);
             res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
+            res.cookie('isAuthenticated', true, { maxAge: sessionDuration });
         }
 
         delete user.id;
@@ -110,6 +112,7 @@ router.post('/resetpassword', validationHelper.resetPasswordValidation, async fu
         const user = await authBusiness.resetPassword(resetToken, password, confirmPassword);
         const token = authBusiness.startSession(user.id);
         res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
+        res.cookie('isAuthenticated', true, { maxAge: sessionDuration });
         delete user.id;
         response = {
             data: {
@@ -138,6 +141,7 @@ router.post('/signout', function (req, res) {
     }
 
     res.clearCookie('token');
+    res.clearCookie('isAuthenticated');
     res.json({
         message: 'Goodbye!'
     });

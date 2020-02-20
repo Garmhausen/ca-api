@@ -33,6 +33,7 @@ app.use(async (req, res, next) => {
             } else {
                 authBusiness.endSession(sessionId);
                 res.clearCookie('token');
+                res.clearCookie('isAuthenticated');
             }
         }
     } catch (error) {
