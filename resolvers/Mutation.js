@@ -1,5 +1,18 @@
 const { prisma } = require('../prisma');
 
+//#region Session
+function createSession(args) {
+    console.log('CREATED A NEW SESSION!');
+    console.log('args', args);
+    return prisma.createSession(args);
+}
+
+function updateSession(id, data) {
+
+    return prisma.updateSession({ where: { id }, data });
+}
+//#endregion
+
 //#region User
 function deleteUser(id) {
 
@@ -47,6 +60,8 @@ function updateClient(id, data) {
 //#endregion
 
 module.exports = {
+    createSession,
+    updateSession,
     deleteUser,
     signup,
     updatePermissions,

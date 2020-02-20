@@ -27,12 +27,10 @@ router.get('/me', async function (req, res) {
     return res.status(400).json("Not logged in");
   }
 
-  const authToken = authBusiness.createToken(req.userId);
   const user = userBusiness.makeSlimUser(req.user);
   delete user.id;
   
   const response = {
-    authToken,
     data: {
       user
     }

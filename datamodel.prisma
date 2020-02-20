@@ -13,12 +13,12 @@ type User {
   resetTokenExpiration: Float
   permissions: [Permission] @scalarList(strategy: RELATION)
   clients: [Client!]!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Client {
   id: ID! @id
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
   name: String!
   email: String
   phone: String
@@ -30,4 +30,15 @@ type Client {
   stateProvince: String
   notes: String
   user: User!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type Session {
+  id: ID! @id
+  active: Boolean!
+  user: User!
+  expireOn: DateTime!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

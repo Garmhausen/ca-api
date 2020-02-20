@@ -2,40 +2,45 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const { authBusiness, userBusiness } = require('./business');
-const { userService } = require('./service');
 const routes = require('./routes');
 
-// start app
 const app = express();
 
-// ------ BEGIN MIDDLEWARE ------
 const corsOptions = {
     origin: process.env.FRONTEND_URL,
     optionsSuccessStatus: 200,
     credentials: true
 }
+
 app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
-// add userId and user to requests if logged in
 app.use(async (req, res, next) => {
-    const { access_token } = req.cookies;
-    
-    if (access_token) {
-        const userId = authBusiness.getUserIdFromValidToken(access_token);
-        req.userId = userId;
-        const user = userId ? await userService.getUserById(userId) : null;
-        if (user) {
-            req.user = userBusiness.makeSlimUser(user);
+    try {
+        const { token } = req.cookies;
+        const sessionId = token ? jwt.verify(token, process.env.TOKEN_SECRET) : null;
+
+        if (sessionId) {
+            const isAuthenticated = await authBusiness.checkSession(sessionId);
+            if (isAuthenticated) {
+                const user = await authBusiness.getUserBySessionId(sessionId);
+                req.user = userBusiness.makeSlimUser(user);
+                req.userId = user.id;
+            } else {
+                authBusiness.endSession(sessionId);
+                res.clearCookie('token');
+            }
         }
+    } catch (error) {
+        console.log('error:', error);
     }
 
     return next();
 });
-// ------ END MIDDLEWARE ------
 
 app.use(routes);
 

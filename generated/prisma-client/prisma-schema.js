@@ -7,6 +7,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateSession {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -17,8 +21,6 @@ type BatchPayload {
 
 type Client {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   name: String!
   email: String
   phone: String
@@ -30,6 +32,8 @@ type Client {
   stateProvince: String
   notes: String
   user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type ClientConnection {
@@ -80,10 +84,6 @@ type ClientEdge {
 enum ClientOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   name_ASC
   name_DESC
   email_ASC
@@ -104,12 +104,14 @@ enum ClientOrderByInput {
   stateProvince_DESC
   notes_ASC
   notes_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type ClientPreviousValues {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   name: String!
   email: String
   phone: String
@@ -120,6 +122,8 @@ type ClientPreviousValues {
   postalCode: String
   stateProvince: String
   notes: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input ClientScalarWhereInput {
@@ -137,22 +141,6 @@ input ClientScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
   name: String
   name_not: String
   name_in: [String!]
@@ -293,6 +281,22 @@ input ClientScalarWhereInput {
   notes_not_starts_with: String
   notes_ends_with: String
   notes_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ClientScalarWhereInput!]
   OR: [ClientScalarWhereInput!]
   NOT: [ClientScalarWhereInput!]
@@ -412,22 +416,6 @@ input ClientWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
   name: String
   name_not: String
   name_in: [String!]
@@ -569,6 +557,22 @@ input ClientWhereInput {
   notes_ends_with: String
   notes_not_ends_with: String
   user: UserWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [ClientWhereInput!]
   OR: [ClientWhereInput!]
   NOT: [ClientWhereInput!]
@@ -589,6 +593,12 @@ type Mutation {
   upsertClient(where: ClientWhereUniqueInput!, create: ClientCreateInput!, update: ClientUpdateInput!): Client!
   deleteClient(where: ClientWhereUniqueInput!): Client
   deleteManyClients(where: ClientWhereInput): BatchPayload!
+  createSession(data: SessionCreateInput!): Session!
+  updateSession(data: SessionUpdateInput!, where: SessionWhereUniqueInput!): Session
+  updateManySessions(data: SessionUpdateManyMutationInput!, where: SessionWhereInput): BatchPayload!
+  upsertSession(where: SessionWhereUniqueInput!, create: SessionCreateInput!, update: SessionUpdateInput!): Session!
+  deleteSession(where: SessionWhereUniqueInput!): Session
+  deleteManySessions(where: SessionWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -624,14 +634,146 @@ type Query {
   client(where: ClientWhereUniqueInput!): Client
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client]!
   clientsConnection(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ClientConnection!
+  session(where: SessionWhereUniqueInput!): Session
+  sessions(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Session]!
+  sessionsConnection(where: SessionWhereInput, orderBy: SessionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SessionConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Session {
+  id: ID!
+  active: Boolean!
+  user: User!
+  expireOn: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SessionConnection {
+  pageInfo: PageInfo!
+  edges: [SessionEdge]!
+  aggregate: AggregateSession!
+}
+
+input SessionCreateInput {
+  id: ID
+  active: Boolean!
+  user: UserCreateOneInput!
+  expireOn: DateTime!
+}
+
+type SessionEdge {
+  node: Session!
+  cursor: String!
+}
+
+enum SessionOrderByInput {
+  id_ASC
+  id_DESC
+  active_ASC
+  active_DESC
+  expireOn_ASC
+  expireOn_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type SessionPreviousValues {
+  id: ID!
+  active: Boolean!
+  expireOn: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SessionSubscriptionPayload {
+  mutation: MutationType!
+  node: Session
+  updatedFields: [String!]
+  previousValues: SessionPreviousValues
+}
+
+input SessionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SessionWhereInput
+  AND: [SessionSubscriptionWhereInput!]
+  OR: [SessionSubscriptionWhereInput!]
+  NOT: [SessionSubscriptionWhereInput!]
+}
+
+input SessionUpdateInput {
+  active: Boolean
+  user: UserUpdateOneRequiredInput
+  expireOn: DateTime
+}
+
+input SessionUpdateManyMutationInput {
+  active: Boolean
+  expireOn: DateTime
+}
+
+input SessionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  active: Boolean
+  active_not: Boolean
+  user: UserWhereInput
+  expireOn: DateTime
+  expireOn_not: DateTime
+  expireOn_in: [DateTime!]
+  expireOn_not_in: [DateTime!]
+  expireOn_lt: DateTime
+  expireOn_lte: DateTime
+  expireOn_gt: DateTime
+  expireOn_gte: DateTime
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [SessionWhereInput!]
+  OR: [SessionWhereInput!]
+  NOT: [SessionWhereInput!]
+}
+
+input SessionWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   client(where: ClientSubscriptionWhereInput): ClientSubscriptionPayload
+  session(where: SessionSubscriptionWhereInput): SessionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -644,6 +786,8 @@ type User {
   resetTokenExpiration: Float
   permissions: [Permission!]!
   clients(where: ClientWhereInput, orderBy: ClientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Client!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserConnection {
@@ -661,6 +805,11 @@ input UserCreateInput {
   resetTokenExpiration: Float
   permissions: UserCreatepermissionsInput
   clients: ClientCreateManyWithoutUserInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutClientsInput {
@@ -700,6 +849,10 @@ enum UserOrderByInput {
   resetToken_DESC
   resetTokenExpiration_ASC
   resetTokenExpiration_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
@@ -710,6 +863,8 @@ type UserPreviousValues {
   resetToken: String
   resetTokenExpiration: Float
   permissions: [Permission!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -728,6 +883,16 @@ input UserSubscriptionWhereInput {
   AND: [UserSubscriptionWhereInput!]
   OR: [UserSubscriptionWhereInput!]
   NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiration: Float
+  permissions: UserUpdatepermissionsInput
+  clients: ClientUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -749,6 +914,13 @@ input UserUpdateManyMutationInput {
   permissions: UserUpdatepermissionsInput
 }
 
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateOneRequiredWithoutClientsInput {
   create: UserCreateWithoutClientsInput
   update: UserUpdateWithoutClientsDataInput
@@ -767,6 +939,11 @@ input UserUpdateWithoutClientsDataInput {
   resetToken: String
   resetTokenExpiration: Float
   permissions: UserUpdatepermissionsInput
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutClientsInput {
@@ -856,6 +1033,22 @@ input UserWhereInput {
   clients_every: ClientWhereInput
   clients_some: ClientWhereInput
   clients_none: ClientWhereInput
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

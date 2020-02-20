@@ -7,37 +7,65 @@ const { makeSlimUser } = require('./userBusiness');
 const { authService, userService } = require('../service');
 const { transport, craftEmail } = require('../mail');
 
-const createToken = (userId) => {
-  const expiresIn = 1000 * 60 * 60 // 1 hour from now
-  const accessToken = {
-    userId,
-    expiration: Date.now() + expiresIn
-  }
+const sessionDuration = process.env.SESSION_DURATION;
 
-  const token = {
-    access_token: jwt.sign(accessToken, process.env.TOKEN_SECRET),
-    expires_in: expiresIn
-  }
+const startSession = async (userId) => {
+  const session = await authService.createSession({
+      active: true,
+      expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+    }, userId);
+  const token = jwt.sign(session.id, process.env.TOKEN_SECRET);
 
   return token;
 };
 
-const getUserIdFromValidToken = (accessToken) => {
-  if (accessToken) {
-    try {
-      const { userId, expiration } = jwt.verify(accessToken, process.env.TOKEN_SECRET);
+const endSession = (sessionId) => {
+  if (!sessionId) {
+    throw new Error('Must provide non-null sessionId');
+  }
+  
+  authService.updateSession(sessionId, {
+    active: false
+  });
+};
 
-      if (expiration < Date.now()) {
-        throw new Error('Token has expired');
-      }
+const checkSession = async (sessionId) => {
+  let success = false;
 
-      return userId;
-    } catch (error) {
-      console.log('error', error);  // TODO: better error handling
-    };
+  if (!sessionId) {
+    throw new Error('Must provide non-null sessionId');
   }
 
-  return null
+  const session = await authService.getSession(sessionId);
+
+  if (!session) {
+    throw new Error('No session found!');
+  }
+
+  const {active, expireOn } = session;
+
+  if (active && Date.parse(expireOn) > Date.now()) {
+    refreshSession(sessionId)
+    success = true;
+  }
+
+  return success;
+}
+
+const refreshSession = async (sessionId) => {
+  authService.updateSession(sessionId, {
+    expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+  });
+}
+
+const getUserBySessionId = async (sessionId) => {
+  const session = await authService.getSessionWithUser(sessionId);
+
+  if (!session) {
+    throw new Error('No session for for given sessionId', sessionId);
+  }
+
+  return makeSlimUser(session.user);
 }
 
 const userSignUp = async (args) => {
@@ -131,8 +159,11 @@ const resetPassword = async (resetToken, newPassword, confirmPassword) => {
 };
 
 module.exports = {
-  createToken,
-  getUserIdFromValidToken,
+  startSession,
+  endSession,
+  checkSession,
+  refreshSession,
+  getUserBySessionId,
   userSignUp,
   signin,
   requestPasswordReset,
