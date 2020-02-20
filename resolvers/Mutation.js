@@ -2,8 +2,6 @@ const { prisma } = require('../prisma');
 
 //#region Session
 function createSession(args) {
-    console.log('CREATED A NEW SESSION!');
-    console.log('args', args);
     return prisma.createSession(args);
 }
 
