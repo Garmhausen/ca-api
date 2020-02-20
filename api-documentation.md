@@ -16,6 +16,16 @@ This is a common error structure pattern implemented in all endpoints.
 "There was an error: [error message]"
 ```
 
+**Condition** : If the request requires authentication but the user is not authenticated.
+
+**Code** : `401 UNAUTHORIZED`
+
+**Content Example**
+
+```json
+"You must be logged in!"
+```
+
 <br><br><br>
 
 # Heartbeat
@@ -76,10 +86,6 @@ GET /me
 
 ```json
 {
-    "authToken": {
-      "access_token": "<an encrypted token>",
-      "expires_in": "3600000"
-    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -151,10 +157,6 @@ POST /account/signup
 
 ```json
 {
-    "authToken": {
-      "access_token": "<an encrypted token>",
-      "expires_in": "3600000"
-    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -232,10 +234,6 @@ POST /account/signin
 
 ```json
 {
-    "authToken": {
-      "access_token": "<an encrypted token>",
-      "expires_in": "3600000"
-    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -386,10 +384,6 @@ POST /account/resetpassword
 
 ```json
 {
-    "authToken": {
-      "access_token": "<an encrypted token>",
-      "expires_in": "3600000"
-    },
     "data": {
       "user": {
         "name": "Bruce Wayne",
@@ -487,10 +481,6 @@ POST /client
 
 ```json
 {
-    "authToken": {
-      "access_token": "<an encrypted token>",
-      "expires_in": "3600000"
-    },
     "data": {
       "client": {
         "city": "Gotham",
@@ -556,10 +546,6 @@ A valid client id must be supplied in the URL.  The body of the request can be e
 
 ```json
 {
-    "authToken": {
-      "access_token": "<an encrypted token>",
-      "expires_in": "3600000"
-    },
     "data": {
       "client": {
         "city": "Gotham",
