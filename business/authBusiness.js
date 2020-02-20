@@ -12,7 +12,7 @@ const sessionDuration = process.env.SESSION_DURATION;
 const startSession = async (userId) => {
   const session = await authService.createSession({
       active: true,
-      expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+      expireOn: new Date(Date.now() + parseFloat(sessionDuration))
     }, userId);
   const token = jwt.sign(session.id, process.env.TOKEN_SECRET);
 
@@ -54,7 +54,7 @@ const checkSession = async (sessionId) => {
 
 const refreshSession = async (sessionId) => {
   authService.updateSession(sessionId, {
-    expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+    expireOn: new Date(Date.now() + parseFloat(sessionDuration))
   });
 }
 

@@ -3,7 +3,7 @@ const router = express.Router();
 const { validationResult } = require('express-validator');
 
 const { handleError, verifyLoggedIn } = require('../utils');
-const { authBusiness, clientBusiness } = require('../business');
+const { clientBusiness } = require('../business');
 const { validationHelper } = require('../helpers');
 
 // all routes in this file begin with /client
