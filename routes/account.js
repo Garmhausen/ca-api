@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 const { authBusiness } = require('../business');
-const { handleError } = require('../utils');
+const { handleError, verifyLoggedIn } = require('../utils');
 const { validationHelper } = require('../helpers');
 
 const sessionDuration = process.env.SESSION_DURATION;
@@ -26,11 +27,11 @@ router.post('/signup', validationHelper.accountSignUpValidation, async function(
     
     try {
         let user = await authBusiness.userSignUp(args);
-        const authToken = authBusiness.createToken(user.id);
+        const token = await authBusiness.startSession(user.id);
+        res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
         delete user.id;
         res.status(201);  // Created
         response = {
-            authToken,
             data: {
                 user
             }
@@ -52,15 +53,14 @@ router.post('/signin', async function(req, res) {
 
     try {
         const user = await authBusiness.signin(email, password);
-        console.log('user found', user);
-        const token = await authBusiness.startSession(user.id);
-        res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
-        delete user.id;
-        response = {
-            data: {
-                user
-            }
+
+        if (!req.userId) {
+            const token = await authBusiness.startSession(user.id);
+            res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
         }
+
+        delete user.id;
+        response = { data: { user } };
     } catch (error) {
         response = handleError(error);
         // could be caused by something other than this, need better error handling
@@ -69,16 +69,6 @@ router.post('/signin', async function(req, res) {
     }
 
     res.json(response);
-});
-
-// POST /account/signout
-router.post('/signout', function(req, res) {
-    console.log('POST /account/signout');
-
-    res.clearCookie('token');
-    res.json({
-        message: 'Goodbye!'
-    });
 });
 
 // POST /account/requestreset
@@ -118,10 +108,10 @@ router.post('/resetpassword', validationHelper.resetPasswordValidation, async fu
         const password = req.body.password;
         const confirmPassword = req.body.confirmPassword;
         const user = await authBusiness.resetPassword(resetToken, password, confirmPassword);
-        const authToken = authBusiness.createToken(user.id);
+        const token = authBusiness.startSession(user.id);
+        res.cookie('token', token, { maxAge: sessionDuration, httpOnly: true });
         delete user.id;
         response = {
-            authToken,
             data: {
                 user
             }
@@ -132,6 +122,25 @@ router.post('/resetpassword', validationHelper.resetPasswordValidation, async fu
     }
 
     res.json(response);
+});
+
+// all routes below require login
+router.use((req, res, next) => verifyLoggedIn(req, res, next));
+
+// POST /account/signout
+router.post('/signout', function (req, res) {
+    console.log('POST /account/signout');
+    const { token } = req.cookies;
+    
+    if (token) {
+        const sessionId = jwt.verify(token, process.env.TOKEN_SECRET);
+        authBusiness.endSession(sessionId);
+    }
+
+    res.clearCookie('token');
+    res.json({
+        message: 'Goodbye!'
+    });
 });
 
 module.exports = router;

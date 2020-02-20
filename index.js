@@ -2,9 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const { authBusiness, userBusiness } = require('./business');
-const { userService } = require('./service');
 const routes = require('./routes');
 
 const app = express();
@@ -20,17 +20,23 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 app.use(async (req, res, next) => {
-    const { token } = req.cookies;
-    
-    if (token) {
-        const user = await authBusiness.getUserFromValidSession(token);
+    try {
+        const { token } = req.cookies;
+        const sessionId = token ? jwt.verify(token, process.env.TOKEN_SECRET) : null;
 
-        if (user) {
-            req.userId = user.id;
-            req.user = userBusiness.makeSlimUser(user);
-        } else {
-            res.clearCookie('token');
+        if (sessionId) {
+            const isAuthenticated = await authBusiness.checkSession(sessionId);
+            if (isAuthenticated) {
+                const user = await authBusiness.getUserBySessionId(sessionId);
+                req.user = userBusiness.makeSlimUser(user);
+                req.userId = user.id;
+            } else {
+                authBusiness.endSession(sessionId);
+                res.clearCookie('token');
+            }
         }
+    } catch (error) {
+        console.log('error:', error);
     }
 
     return next();

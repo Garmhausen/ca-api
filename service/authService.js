@@ -6,6 +6,24 @@ const getSession = async (sessionId) => {
   return session;
 }
 
+const getSessionWithUser = async (sessionId) => {
+  const sessionWithUser = await query.retrieveSession(sessionId).$fragment(`
+    {
+      id
+      active
+      expireOn
+      user {
+        id
+        permissions
+        email
+        name
+      }
+    }
+  `);
+
+  return sessionWithUser;
+}
+
 const createSession = async (sessionData, userId) => {
   const session = await mutation.createSession({
     ...sessionData,
@@ -33,6 +51,7 @@ const signup = async (args) => {
 
 module.exports = {
   getSession,
+  getSessionWithUser,
   createSession,
   updateSession,
   signup

@@ -10,68 +10,62 @@ const { transport, craftEmail } = require('../mail');
 const sessionDuration = process.env.SESSION_DURATION;
 
 const startSession = async (userId) => {
-  console.log('attempting to start session...');
-  const newSession = await authService.createSession({
-    active: true,
-    expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
-  }, userId);
-  console.log('newSession', newSession);
-  const token = jwt.sign(newSession.id, process.env.TOKEN_SECRET);
+  const session = await authService.createSession({
+      active: true,
+      expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+    }, userId);
+  const token = jwt.sign(session.id, process.env.TOKEN_SECRET);
 
   return token;
 };
 
-const refreshSession = async (token) => {
+const endSession = (sessionId) => {
+  if (!sessionId) {
+    throw new Error('Must provide non-null sessionId');
+  }
+  
+  authService.updateSession(sessionId, {
+    active: false
+  });
+};
+
+const checkSession = async (sessionId) => {
   let success = false;
 
-  if (token) {
-    const sessionId = jwt.verify(token, process.env.TOKEN_SECRET);
-    const { active, expireOn } = await authService.getSession(sessionId);
+  if (!sessionId) {
+    throw new Error('Must provide non-null sessionId');
+  }
 
-    if (active && Date.parse(expireOn) > Date.now()) {
-      authService.updateSession(sessionId, {
-        expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
-      });
-      success = true;
-    } else {
-      authService.endSession(sessionId);
-    }
+  const session = await authService.getSession(sessionId);
+
+  if (!session) {
+    throw new Error('No session found!');
+  }
+
+  const {active, expireOn } = session;
+
+  if (active && Date.parse(expireOn) > Date.now()) {
+    refreshSession(sessionId)
+    success = true;
   }
 
   return success;
-};
+}
 
-const endSession = (token) => {
-  if (token) {
-    const sessionId = jwt.verify(token, process.env.TOKEN_SECRET);
-    authService.updateSession(sessionId, {
-      active: false
-    });
-  }
-};
+const refreshSession = async (sessionId) => {
+  authService.updateSession(sessionId, {
+    expireOn: new Date(parseFloat(Date.now()) + parseFloat(sessionDuration))
+  });
+}
 
-const getUserFromValidSession = async (sessionToken) => {
-  if (sessionToken) {
-    try {
-      const sessionId = jwt.verify(sessionToken, process.env.TOKEN_SECRET);
-      const { active, expireOn, user } = await authService.getSession(sessionId);
+const getUserBySessionId = async (sessionId) => {
+  const session = await authService.getSessionWithUser(sessionId);
 
-      if (!active || expireOn < Date.now()) {
-        if (active) {
-          endSession(sessionToken);
-        }
-        throw new Error('Session has expired');
-      }
-
-      refreshSession(sessionToken);
-
-      return user;
-    } catch (error) {
-      console.log('error', error);  // TODO: better error handling
-    };
+  if (!session) {
+    throw new Error('No session for for given sessionId', sessionId);
   }
 
-  return null
+  return makeSlimUser(session.user);
 }
 
 const userSignUp = async (args) => {
@@ -166,9 +160,10 @@ const resetPassword = async (resetToken, newPassword, confirmPassword) => {
 
 module.exports = {
   startSession,
-  refreshSession,
   endSession,
-  getUserFromValidSession,
+  checkSession,
+  refreshSession,
+  getUserBySessionId,
   userSignUp,
   signin,
   requestPasswordReset,

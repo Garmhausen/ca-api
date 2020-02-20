@@ -28,7 +28,6 @@ router.post('/', validationHelper.createClientValidation, async function(req, re
     const client = await clientBusiness.createClient(req.body, req.userId);
     res.status(201);  // created
     response = {
-      authToken: authBusiness.createToken(req.userId),
       data: {
         client
       }
@@ -50,7 +49,6 @@ router.delete('/:id', async function(req, res) {
     const client = await clientBusiness.deleteClient(req.params.id, req.user);
 
     response = {
-      authToken: authBusiness.createToken(req.userId),
       data: {
         client
       }

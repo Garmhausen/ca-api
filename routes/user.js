@@ -22,7 +22,6 @@ router.get('/:id', async function(req, res) {
         const user = userBusiness.makeSlimUser(await userBusiness.getUserById(req.params.id, req.user));
 
         response = {
-            authToken: authBusiness.createToken(req.userId),
             data: {
                 user
             }
@@ -57,7 +56,6 @@ router.patch('/:id', async function(req, res) {
         const user = await userBusiness.updateUser(req.params.id, updates, req.user);
 
         response = {
-            authToken: authBusiness.createToken(req.userId),
             data: {
                 user
             }
@@ -79,7 +77,6 @@ router.delete('/:id', async function(req, res) {
         const user = await userBusiness.deleteUser(req.params.id, req.user);
 
         response = {
-            authToken: authBusiness.createToken(req.userId),
             data: {
                 user
             }
