@@ -29,7 +29,7 @@ exports.slimUser = `
 
 exports.verifyLoggedIn = (req, res, next) => {
     if (!req.user) {
-        res.status(400); // bad request
+        res.status(401); // unauthorized
         res.json({ message: 'You must be logged in!' });
     } else {
         return next();
