@@ -58,6 +58,30 @@ function retrieveClientsByUserId(id) {
     });
 }
 
+function retrieveClientsByUserIdPaged(id, pageProperties) {
+
+    return prisma.clients(
+        {
+            where: {
+                user: { id }
+            },
+            orderBy: pageProperties.sortby,
+            skip: pageProperties.page * pageProperties.pagesize,
+            first: pageProperties.pagesize
+        });
+}
+
+function retrieveClientsCountByUserId(id) {
+
+    return prisma.clientsConnection({
+        where: {
+            user: {
+                id
+            }
+        }
+    }).aggregate().count();
+}
+
 function retrieveClientByClientIdAndUserId(clientId, userId) {
 
     return prisma.clients({
@@ -80,5 +104,7 @@ module.exports = {
     retrieveClient,
     retrieveClients,
     retrieveClientsByUserId,
+    retrieveClientsByUserIdPaged,
+    retrieveClientsCountByUserId,
     retrieveClientByClientIdAndUserId,
 }
