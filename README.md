@@ -21,3 +21,9 @@ when you make a change, you have to deploy it to prisma and then ask prisma to g
 - prisma deploy
 - prisma generate
 
+### seed data
+to add some seed data to the database
+- prisma seed
+
+to wipe the database before adding the seed data
+- prisma seed --reset

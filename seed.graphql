@@ -1,0 +1,79 @@
+# create an admin account
+mutation {
+  createUser(
+    data: {
+      email: "admin@admin.com"
+      password: "$2a$10$meDmj10qA9MeWGHghEFyTeKvlQ7D6Bf1QtW1BPofq6yHy2vHil6xe" # password in plain text:  Potato1!
+      name: "Admin"
+      permissions: {
+        set: [ADMIN, USER, PERMISSIONUPDATE]
+      }
+    }
+  ) { id }
+}
+
+# create a normal user account
+mutation {
+  createUser(
+    data: {
+      email: "user@user.com"
+      password: "$2a$10$meDmj10qA9MeWGHghEFyTeKvlQ7D6Bf1QtW1BPofq6yHy2vHil6xe" # password in plain text:  Potato1!
+      name: "User"
+      permissions: { set: [ USER] }
+    }
+  ) {
+    id
+  }
+}
+
+# create three clients associated with the normal user account
+mutation {
+  createClient(
+    data: {
+      name: "Client 1"
+      email: "client1@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 1"
+      phone: "123-456-7890"
+      user: { connect: { email: "user@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 2"
+      email: "client2@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 2"
+      phone: "123-456-7890"
+      user: { connect: { email: "user@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 3"
+      email: "client3@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 3"
+      phone: "123-456-7890"
+      user: { connect: { email: "user@user.com" } }
+    }
+  ) {
+    id
+  }
+}
