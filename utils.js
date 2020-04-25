@@ -1,7 +1,7 @@
 exports.clientsGridDefault = {
     page: 0,
     pagesize: 20,
-    sortby: 'name_DESC',
+    sortby: 'name_ASC',
 };
 
 exports.handleError = (error) => {
@@ -21,6 +21,24 @@ exports.hasPermission = (user, permissionsNeeded) => {
         throw new Error(`You do not have sufficient permissions.`);
     }
 };
+
+exports.calculatePageInfo = (properties, total) => {
+    const totalPages = Math.ceil(total / properties.pagesize);
+    const currentPage = properties.page + 1;
+    const prev = currentPage - 1 ? true : false;
+    const next = currentPage == totalPages ? false : true;
+    const pagesize = properties.pagesize;
+
+    const result = {
+        totalPages,
+        currentPage,
+        prev,
+        next,
+        pagesize
+    }
+
+    return result;
+}
 
 exports.slimUser = `
     {
