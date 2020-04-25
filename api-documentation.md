@@ -578,3 +578,101 @@ A valid client id must be supplied in the URL.  The body of the request can be e
 "Unable to delete client."
 ```
 </details>
+
+<br>
+
+<details>
+<summary>
+GET /clients
+</summary>
+
+**Method** : `POST`
+
+**Auth required** : yes
+
+**Query Param example**
+
+```
+page: 0
+pagesize: 10
+sortby: email_ASC
+```
+
+## Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+{
+    "clients": [
+        {
+            "city": "Durham",
+            "name": "Client 1",
+            "updatedAt": "<DateTime>",
+            "email": "client1@client.com",
+            "address3": null,
+            "address2": null,
+            "postalCode": "27707",
+            "stateProvince": "NC",
+            "id": "<client identifier>",
+            "address1": "123 Main St",
+            "createdAt": "<DateTime>",
+            "notes": "Notes for Client 1",
+            "phone": "123-456-7890"
+        },
+        {
+            "city": "Durham",
+            "name": "Client 2",
+            "updatedAt": "<DateTime>",
+            "email": "client2@client.com",
+            "address3": null,
+            "address2": null,
+            "postalCode": "27707",
+            "stateProvince": "NC",
+            "id": "<client identifier>",
+            "address1": "123 Main St",
+            "createdAt": "<DateTime>",
+            "notes": "Notes for Client 2",
+            "phone": "123-456-7890"
+        },
+        {
+            "city": "Durham",
+            "name": "Client 3",
+            "updatedAt": "<DateTime>",
+            "email": "client3@client.com",
+            "address3": null,
+            "address2": null,
+            "postalCode": "27707",
+            "stateProvince": "NC",
+            "id": "<client identifier>",
+            "address1": "123 Main St",
+            "createdAt": "<DateTime>",
+            "notes": "Notes for Client 3",
+            "phone": "123-456-7890"
+        }
+    ],
+    "total": 0,
+    "page": {
+        "totalPages": 1,
+        "currentPage": 1,
+        "prev": false,
+        "next": false,
+        "pagesize": 10
+    }
+}
+```
+
+## Error Response
+
+**Condition** : Any failure
+
+**Code** : `400 BAD REQUEST`
+
+**Content example**
+
+```json
+Unable to fetch clients
+```
+</details>
