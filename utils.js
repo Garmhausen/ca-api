@@ -1,4 +1,8 @@
-const jwt = require('jsonwebtoken');
+exports.clientsGridDefault = {
+    page: 0,
+    pagesize: 20,
+    sortby: 'name_DESC',
+};
 
 exports.handleError = (error) => {
     console.log('There was an error:', error.message); // TODO: replace with actual logging
