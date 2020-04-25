@@ -13,7 +13,6 @@ router.use(express.json()); // requiredk for parsing json body in request
 // GET /clients
 router.get('/', async function(req, res) {
   console.log('GET /clients');
-  console.log('query params:', req.query);
 
   const pageProperties = {
     page: req.query.page ? Number.parseInt(req.query.page) : clientsGridDefault.page,
@@ -24,13 +23,9 @@ router.get('/', async function(req, res) {
   let response;
 
   try {
-    const clients = await clientBusiness.getClients(pageProperties, req.userId, req.user);
+    const data = await clientBusiness.getClients(pageProperties, req.userId, req.user);
 
-    response = {
-      data: {
-        clients
-      }
-    }
+    response = data;
   } catch (error) {
     console.log('there was an error:', error);
     res.status = 400; // Bad Request

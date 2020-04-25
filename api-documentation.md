@@ -606,64 +606,60 @@ sortby: email_ASC
 
 ```json
 {
-    "data": {
-        "clients": {
-            "clients": [
-                {
-                    "city": "Durham",
-                    "name": "Client 1",
-                    "updatedAt": "<DateTime>",
-                    "email": "client1@client.com",
-                    "address3": null,
-                    "address2": null,
-                    "postalCode": "27707",
-                    "stateProvince": "NC",
-                    "id": "<client identifier>",
-                    "address1": "123 Main St",
-                    "createdAt": "<DateTime>",
-                    "notes": "Notes for Client 1",
-                    "phone": "123-456-7890"
-                },
-                {
-                    "city": "Durham",
-                    "name": "Client 2",
-                    "updatedAt": "<DateTime>",
-                    "email": "client2@client.com",
-                    "address3": null,
-                    "address2": null,
-                    "postalCode": "27707",
-                    "stateProvince": "NC",
-                    "id": "<client identifier>",
-                    "address1": "123 Main St",
-                    "createdAt": "<DateTime>",
-                    "notes": "Notes for Client 2",
-                    "phone": "123-456-7890"
-                },
-                {
-                    "city": "Durham",
-                    "name": "Client 3",
-                    "updatedAt": "<DateTime>",
-                    "email": "client3@client.com",
-                    "address3": null,
-                    "address2": null,
-                    "postalCode": "27707",
-                    "stateProvince": "NC",
-                    "id": "<client identifier>",
-                    "address1": "123 Main St",
-                    "createdAt": "<DateTime>",
-                    "notes": "Notes for Client 3",
-                    "phone": "123-456-7890"
-                }
-            ],
-            "total": 0,
-            "page": {
-                "totalPages": 1,
-                "currentPage": 1,
-                "prev": false,
-                "next": false,
-                "pagesize": 10
-            }
+    "clients": [
+        {
+            "city": "Durham",
+            "name": "Client 1",
+            "updatedAt": "<DateTime>",
+            "email": "client1@client.com",
+            "address3": null,
+            "address2": null,
+            "postalCode": "27707",
+            "stateProvince": "NC",
+            "id": "<client identifier>",
+            "address1": "123 Main St",
+            "createdAt": "<DateTime>",
+            "notes": "Notes for Client 1",
+            "phone": "123-456-7890"
+        },
+        {
+            "city": "Durham",
+            "name": "Client 2",
+            "updatedAt": "<DateTime>",
+            "email": "client2@client.com",
+            "address3": null,
+            "address2": null,
+            "postalCode": "27707",
+            "stateProvince": "NC",
+            "id": "<client identifier>",
+            "address1": "123 Main St",
+            "createdAt": "<DateTime>",
+            "notes": "Notes for Client 2",
+            "phone": "123-456-7890"
+        },
+        {
+            "city": "Durham",
+            "name": "Client 3",
+            "updatedAt": "<DateTime>",
+            "email": "client3@client.com",
+            "address3": null,
+            "address2": null,
+            "postalCode": "27707",
+            "stateProvince": "NC",
+            "id": "<client identifier>",
+            "address1": "123 Main St",
+            "createdAt": "<DateTime>",
+            "notes": "Notes for Client 3",
+            "phone": "123-456-7890"
         }
+    ],
+    "total": 0,
+    "page": {
+        "totalPages": 1,
+        "currentPage": 1,
+        "prev": false,
+        "next": false,
+        "pagesize": 10
     }
 }
 ```

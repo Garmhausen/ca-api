@@ -12,8 +12,13 @@ const getClients = async (pageProperties, userId, requestingUser) => {
     hasPermission(requestingUser, ['ADMIN']);
   }
 
-  const clients = await clientService.getClientsByUserIdPaged(userId, pageProperties);
   const total = await clientService.getClientCountByUserId(userId);
+  const totalPages = Math.ceil(total / pageProperties.pagesize);
+  if (totalPages < pageProperties.page + 1) {
+    pageProperties.page = totalPages - 1;
+  }
+
+  const clients = await clientService.getClientsByUserIdPaged(userId, pageProperties);
   const page = calculatePageInfo(pageProperties, total);
 
   const result = {
