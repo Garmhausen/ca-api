@@ -14,8 +14,13 @@ const getClients = async (pageProperties, userId, requestingUser) => {
 
   const total = await clientService.getClientCountByUserId(userId);
   const totalPages = Math.ceil(total / pageProperties.pagesize);
+
   if (totalPages < pageProperties.page + 1) {
     pageProperties.page = totalPages - 1;
+  }
+  
+  if (pageProperties.page < 0) {
+    pageProperties.page = 0;
   }
 
   const clients = await clientService.getClientsByUserIdPaged(userId, pageProperties);
