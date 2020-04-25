@@ -7,7 +7,19 @@ const getClientById = (clientId) => {
 }
 
 const getClientsByUserId = (userId) => {
-  const clients = query.getClientsByUserId(userId);
+  const clients = query.retrieveClientsByUserId(userId);
+
+  return clients;
+}
+
+const getClientCountByUserId = (userId) => {
+  const clientCount = query.retrieveClientsCountByUserId(userId);
+
+  return clientCount;
+}
+
+const getClientsByUserIdPaged = (userId, pageProperties) => {
+  const clients = query.retrieveClientsByUserIdPaged(userId, pageProperties);
 
   return clients;
 }
@@ -52,6 +64,8 @@ const verifyClientOwnership = async (clientId, userId) => {
 module.exports =  {
   getClientById,
   getClientsByUserId,
+  getClientCountByUserId,
+  getClientsByUserIdPaged,
   getAllClients,
   createClient,
   updateClient,
