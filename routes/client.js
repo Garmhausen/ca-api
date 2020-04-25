@@ -40,6 +40,28 @@ router.post('/', validationHelper.createClientValidation, async function(req, re
   res.json(response);
 })
 
+// GET /client/:id
+router.get('/:id', async function(req, res) {
+  console.log(`GET /client/${req.params.id}`);
+  let response;
+
+  try {
+    const client = await clientBusiness.getClient(req.params.id, req.user);
+
+    response = {
+      data: {
+        client
+      }
+    }
+  } catch (error) {
+    handleError(error);
+    response = "Unable to retrieve client.";
+    res.status(400); // bad request
+  }
+
+  res.json(response);
+})
+
 // DELETE /client/:id
 router.delete('/:id', async function(req, res) {
   console.log(`DELETE /client/${req.params.id}`);
