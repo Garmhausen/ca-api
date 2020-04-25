@@ -5,28 +5,41 @@ mutation {
       email: "admin@admin.com"
       password: "$2a$10$meDmj10qA9MeWGHghEFyTeKvlQ7D6Bf1QtW1BPofq6yHy2vHil6xe" # password in plain text:  Potato1!
       name: "Admin"
-      permissions: {
-        set: [ADMIN, USER, PERMISSIONUPDATE]
-      }
-    }
-  ) { id }
-}
-
-# create a normal user account
-mutation {
-  createUser(
-    data: {
-      email: "user@user.com"
-      password: "$2a$10$meDmj10qA9MeWGHghEFyTeKvlQ7D6Bf1QtW1BPofq6yHy2vHil6xe" # password in plain text:  Potato1!
-      name: "User"
-      permissions: { set: [ USER] }
+      permissions: { set: [ADMIN, USER, PERMISSIONUPDATE] }
     }
   ) {
     id
   }
 }
 
-# create three clients associated with the normal user account
+# create two normal user account
+mutation {
+  createUser(
+    data: {
+      email: "user1@user.com"
+      password: "$2a$10$meDmj10qA9MeWGHghEFyTeKvlQ7D6Bf1QtW1BPofq6yHy2vHil6xe" # password in plain text:  Potato1!
+      name: "User1"
+      permissions: { set: [USER] }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createUser(
+    data: {
+      email: "user2@user.com"
+      password: "$2a$10$meDmj10qA9MeWGHghEFyTeKvlQ7D6Bf1QtW1BPofq6yHy2vHil6xe" # password in plain text:  Potato1!
+      name: "User2"
+      permissions: { set: [USER] }
+    }
+  ) {
+    id
+  }
+}
+
+# create fifty clients associated with the first user account
 mutation {
   createClient(
     data: {
@@ -37,7 +50,7 @@ mutation {
       address1: "123 Main St"
       notes: "Notes for Client 1"
       phone: "123-456-7890"
-      user: { connect: { email: "user@user.com" } }
+      user: { connect: { email: "user1@user.com" } }
     }
   ) {
     id
@@ -54,7 +67,7 @@ mutation {
       address1: "123 Main St"
       notes: "Notes for Client 2"
       phone: "123-456-7890"
-      user: { connect: { email: "user@user.com" } }
+      user: { connect: { email: "user1@user.com" } }
     }
   ) {
     id
@@ -71,7 +84,1317 @@ mutation {
       address1: "123 Main St"
       notes: "Notes for Client 3"
       phone: "123-456-7890"
-      user: { connect: { email: "user@user.com" } }
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 4"
+      email: "client4@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 4"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 5"
+      email: "client5@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 5"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 6"
+      email: "client6@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 6"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 7"
+      email: "client7@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 7"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 8"
+      email: "client8@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 8"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 9"
+      email: "client9@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 9"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 10"
+      email: "client10@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 10"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 11"
+      email: "client11@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 11"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 12"
+      email: "client12@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 12"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 13"
+      email: "client13@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 13"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 14"
+      email: "client14@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 14"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 15"
+      email: "client15@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 15"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 16"
+      email: "client16@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 16"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 17"
+      email: "client17@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 17"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 18"
+      email: "client18@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 18"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 19"
+      email: "client19@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 19"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 20"
+      email: "client20@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 20"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 21"
+      email: "client21@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 21"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 22"
+      email: "client22@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 22"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 23"
+      email: "client23@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 23"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 24"
+      email: "client24@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 24"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 25"
+      email: "client25@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 25"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 26"
+      email: "client26@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 26"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 27"
+      email: "client27@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 27"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 28"
+      email: "client28@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 28"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 29"
+      email: "client29@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 29"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 30"
+      email: "client30@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 30"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 31"
+      email: "client31@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 31"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 32"
+      email: "client32@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 32"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 33"
+      email: "client33@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 33"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 34"
+      email: "client34@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 34"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 35"
+      email: "client35@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 35"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 36"
+      email: "client36@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 36"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 37"
+      email: "client37@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 37"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 38"
+      email: "client38@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 38"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 39"
+      email: "client39@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 39"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 40"
+      email: "client40@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 40"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 41"
+      email: "client41@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 41"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 42"
+      email: "client42@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 42"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 43"
+      email: "client43@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 43"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 44"
+      email: "client44@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 44"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 45"
+      email: "client45@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 45"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 46"
+      email: "client46@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 46"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 47"
+      email: "client47@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 47"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 48"
+      email: "client48@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 48"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 49"
+      email: "client49@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 49"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 50"
+      email: "client50@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 50"
+      phone: "123-456-7890"
+      user: { connect: { email: "user1@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+# create thirty clients associated with the second user account
+mutation {
+  createClient(
+    data: {
+      name: "Client 51"
+      email: "client51@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 51"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 52"
+      email: "client52@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 52"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 53"
+      email: "client53@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 53"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 54"
+      email: "client54@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 54"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 55"
+      email: "client55@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 55"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 56"
+      email: "client56@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 56"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 57"
+      email: "client57@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 57"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 58"
+      email: "client58@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 58"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 59"
+      email: "client59@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 59"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 60"
+      email: "client60@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 60"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 61"
+      email: "client61@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 61"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 62"
+      email: "client62@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 62"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 63"
+      email: "client63@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 63"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 64"
+      email: "client64@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 64"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 65"
+      email: "client65@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 65"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 66"
+      email: "client66@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 66"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 67"
+      email: "client67@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 67"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 68"
+      email: "client68@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 68"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 69"
+      email: "client69@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 69"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 70"
+      email: "client70@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 70"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 71"
+      email: "client71@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 71"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 72"
+      email: "client72@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 72"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 73"
+      email: "client73@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 73"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 74"
+      email: "client74@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 74"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 75"
+      email: "client75@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 75"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 76"
+      email: "client76@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 76"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 77"
+      email: "client77@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 77"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 78"
+      email: "client78@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 78"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 79"
+      email: "client79@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 79"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
+    }
+  ) {
+    id
+  }
+}
+
+mutation {
+  createClient(
+    data: {
+      name: "Client 80"
+      email: "client80@client.com"
+      postalCode: "27707"
+      stateProvince: "NC"
+      address1: "123 Main St"
+      notes: "Notes for Client 80"
+      phone: "123-456-7890"
+      user: { connect: { email: "user2@user.com" } }
     }
   ) {
     id
