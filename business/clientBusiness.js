@@ -1,10 +1,28 @@
 const { clientService } = require('../service');
-const { hasPermission } = require('../utils');
+const { hasPermission, calculatePageInfo } = require('../utils');
 
 const createClient = (clientData, userId) => {
   const client = clientService.createClient(clientData, userId);
 
   return client;
+}
+
+const getClients = async (pageProperties, userId, requestingUser) => {
+  if (userId != requestingUser.id) {
+    hasPermission(requestingUser, ['ADMIN']);
+  }
+
+  const clients = await clientService.getClientsByUserIdPaged(userId, pageProperties);
+  const total = await clientService.getClientCountByUserId(userId);
+  const page = calculatePageInfo(pageProperties, total);
+
+  const result = {
+    clients,
+    total,
+    page
+  }
+
+  return result;
 }
 
 const deleteClient = async (clientId, requestingUser) => {
@@ -21,5 +39,6 @@ const deleteClient = async (clientId, requestingUser) => {
 
 module.exports = {
   createClient,
+  getClients,
   deleteClient
 }
