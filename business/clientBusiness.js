@@ -7,6 +7,18 @@ const createClient = (clientData, userId) => {
   return client;
 }
 
+const getClient = async (clientId, requestingUser) => {
+  const ownsClient = await clientService.verifyClientOwnership(clientId, requestingUser.id);
+
+  if (!ownsClient) {
+    hasPermission(requestingUser, ['ADMIN']);
+  }
+
+  const client = clientService.getClientById(clientId);
+
+  return client;
+}
+
 const getClients = async (pageProperties, userId, requestingUser) => {
   if (userId != requestingUser.id) {
     hasPermission(requestingUser, ['ADMIN']);
@@ -49,6 +61,7 @@ const deleteClient = async (clientId, requestingUser) => {
 
 module.exports = {
   createClient,
+  getClient,
   getClients,
   deleteClient
 }
