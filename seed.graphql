@@ -43,7 +43,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 1"
+      name: "Client 01"
       email: "client1@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -60,7 +60,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 2"
+      name: "Client 02"
       email: "client2@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -77,7 +77,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 3"
+      name: "Client 03"
       email: "client3@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -94,7 +94,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 4"
+      name: "Client 04"
       email: "client4@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -111,7 +111,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 5"
+      name: "Client 05"
       email: "client5@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -128,7 +128,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 6"
+      name: "Client 06"
       email: "client6@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -145,7 +145,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 7"
+      name: "Client 07"
       email: "client7@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -162,7 +162,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 8"
+      name: "Client 08"
       email: "client8@client.com"
       postalCode: "27707"
       stateProvince: "NC"
@@ -179,7 +179,7 @@ mutation {
 mutation {
   createClient(
     data: {
-      name: "Client 9"
+      name: "Client 09"
       email: "client9@client.com"
       postalCode: "27707"
       stateProvince: "NC"
